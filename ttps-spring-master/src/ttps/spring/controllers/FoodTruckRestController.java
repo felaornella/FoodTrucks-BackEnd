@@ -59,6 +59,18 @@ public class FoodTruckRestController {
 		return new ResponseEntity<List<FoodTruckDTO>>(list,HttpStatus.OK);
 	}
 	
+	@GetMapping("/recuperarIndividual/{id}")
+	public ResponseEntity<FoodTruckDTO>getOnlyFoodTruck(@PathVariable("id") String idPath){
+		System.out.println(idPath);
+		Long id = Long.valueOf(idPath);
+		FoodTruckDTO ftRec= this.foodtruckImp.recuperarPorId(id);
+		if(ftRec == null) {
+			return new ResponseEntity<FoodTruckDTO>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<FoodTruckDTO>(ftRec,HttpStatus.OK);
+	}
+	
 	@PutMapping("/{id}")
     public ResponseEntity<FoodTruck> updateFoodTruck(@PathVariable("id") String idPath,@RequestBody FoodTruckDTO ftruck, @RequestHeader("token")  String token){
 		Long id = Long.valueOf(idPath);
