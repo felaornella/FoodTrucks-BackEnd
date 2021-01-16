@@ -21,7 +21,7 @@ public class ValoracionDTO implements Serializable {
 	private int simpatia;
 	private int calidad_precio;
 	private int sabor;
-	private int diseño;
+	private int diseno;
 	
 	
 	public ValoracionDTO() {}
@@ -33,7 +33,7 @@ public class ValoracionDTO implements Serializable {
 		this.simpatia = v.getSimpatia();
 		this.calidad_precio = v.getCalidad_precio();
 		this.sabor = v.getSabor();
-		this.diseño = v.getDiseño();
+		this.diseno = v.getDiseno();
 	}
 
 
@@ -92,13 +92,13 @@ public class ValoracionDTO implements Serializable {
 	}
 
 
-	public int getDiseño() {
-		return diseño;
+	public int getDiseno() {
+		return diseno;
 	}
 
 
-	public void setDiseño(int diseño) {
-		this.diseño = diseño;
+	public void setDiseno(int diseno) {
+		this.diseno = diseno;
 	}
 	
 	

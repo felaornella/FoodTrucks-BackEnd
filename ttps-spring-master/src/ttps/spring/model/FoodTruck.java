@@ -9,16 +9,16 @@ import javax.persistence.*;
 import ttps.spring.model.DTO.FoodTruckDTO;
 
 @Entity
-@Table(name="foodtruck")
+@Table(name = "foodtruck")
 public class FoodTruck implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Id 
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
 	private String nombre;
 	private String tipo_servicio;
@@ -28,21 +28,17 @@ public class FoodTruck implements Serializable {
 	private String whatsapp;
 	private String facebook;
 	private Integer puntaje;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "imagenes_foodtrucks",
-					joinColumns=@JoinColumn(name="id_foodtruck")
-	)
+	@CollectionTable(name = "imagenes_foodtrucks", joinColumns = @JoinColumn(name = "id_foodtruck"))
 	@Column(name = "file_name")
 	private Set<String> imagenes = new HashSet<String>();
-	
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL})
-	private FoodTrucker dueño;
-	
 
-	public FoodTruck() {}
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	private FoodTrucker dueno;
 
-	
+	public FoodTruck() {
+	}
 
 	public FoodTruck(String nombre, String tipo_servicio, String descripcion, String url, String instagram,
 			String whatsapp, String facebook, Integer puntaje) {
@@ -67,10 +63,9 @@ public class FoodTruck implements Serializable {
 		this.whatsapp = f.getWhatsapp();
 		this.facebook = f.getFacebook();
 		this.puntaje = 0;
-		this.dueño = unFoodTrucker;
+		this.dueno = unFoodTrucker;
 	}
-	
-	
+
 	public String toString() {
 		String ret ="FOODTRUCK";
 		ret = ret + "ID: " + String.valueOf(this.id)+"\nNombre: " + this.nombre;
@@ -78,128 +73,100 @@ public class FoodTruck implements Serializable {
 		ret = ret + "\nurl: " + this.url +"\nInstagram: " + this.instagram + " - WhatsApp: " + this.whatsapp + " - Facebook: " + this.facebook ;
 		ret = ret + "\nPuntaje: " + String.valueOf(this.puntaje);
 		
-		ret = ret + "\nDueño:" + this.dueño.toString() + "\n\n";
+		ret = ret + "\nDueno:" + this.dueno.toString() + "\n\n";
 		return ret;
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
-	public FoodTrucker getDueño() {
-		return dueño;
+	public FoodTrucker getDueno() {
+		return dueno;
 	}
 
-
-
-	public void setDueño(FoodTrucker dueño) {
-		this.dueño = dueño;
-		if(!dueño.getFoodtrucks().contains(this)) {
-			dueño.agregarFoodTruck(this);
+	public void setDueno(FoodTrucker dueno) {
+		this.dueno = dueno;
+		if(!dueno.getFoodtrucks().contains(this)) {
+			dueno.agregarFoodTruck(this);
 		}
 	}
-
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
 	public String getTipo_servicio() {
 		return tipo_servicio;
 	}
-
 
 	public void setTipo_servicio(String tipo_servicio) {
 		this.tipo_servicio = tipo_servicio;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-
 	public String getURL() {
 		return url;
 	}
-
 
 	public void setURL(String Url) {
 		url = Url;
 	}
 
-
 	public String getInstagram() {
 		return instagram;
 	}
-
 
 	public void setInstagram(String instagram) {
 		this.instagram = instagram;
 	}
 
-
 	public String getWhatsapp() {
 		return whatsapp;
 	}
-
 
 	public void setWhatsapp(String whatsapp) {
 		this.whatsapp = whatsapp;
 	}
 
-
 	public String getFacebook() {
 		return facebook;
 	}
-
 
 	public void setFacebook(String facebook) {
 		this.facebook = facebook;
 	}
 
-
 	public Integer getPuntaje() {
 		return puntaje;
 	}
-
 
 	public void setPuntaje(Integer puntaje) {
 		this.puntaje = puntaje;
 	}
 
-
 	public Set<String> getImagenes() {
 		return imagenes;
 	}
-
 
 	public void setImagenes(Set<String> imagenes) {
 		this.imagenes = imagenes;
@@ -208,6 +175,5 @@ public class FoodTruck implements Serializable {
 	public void agregarImagen(String imagen) {
 		imagenes.add(imagen);
 	}
-	
-	
+
 }

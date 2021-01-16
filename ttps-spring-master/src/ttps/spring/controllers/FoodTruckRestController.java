@@ -28,6 +28,7 @@ public class FoodTruckRestController {
 			return new ResponseEntity<FoodTruckDTO>(ft,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
+			e.printStackTrace();
 			return new ResponseEntity<FoodTruckDTO>(HttpStatus.NOT_FOUND);
 		}
 	}

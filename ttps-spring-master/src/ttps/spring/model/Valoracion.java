@@ -25,23 +25,23 @@ public class Valoracion implements Serializable {
 	private int simpatia;
 	private int calidad_precio;
 	private int sabor;
-	private int diseño;
+	private int diseno;
 	
 	
 	public Valoracion() {}
 
 
-	public Valoracion(int limpieza, int simpatia, int calidad_precio, int sabor, int diseño) {
+	public Valoracion(int limpieza, int simpatia, int calidad_precio, int sabor, int diseno) {
 		super();
 		this.limpieza = limpieza;
 		this.simpatia = simpatia;
 		this.calidad_precio = calidad_precio;
 		this.sabor = sabor;
-		this.diseño = diseño;
+		this.diseno = diseno;
 	}
 
 	public String toString() {
-		return "Valoracion:\nID:	"+ this.id.toString() + "\nLimpieza:	" + String.valueOf(this.limpieza) + "\nSimpatia:	" + String.valueOf(this.simpatia) + "\nCalidad/Precio:	" + String.valueOf(this.calidad_precio) + "\nSabor:	" + String.valueOf(this.sabor) + "\nDiseño:	" + String.valueOf(this.diseño) + "\n\n";
+		return "Valoracion:\nID:	"+ this.id.toString() + "\nLimpieza:	" + String.valueOf(this.limpieza) + "\nSimpatia:	" + String.valueOf(this.simpatia) + "\nCalidad/Precio:	" + String.valueOf(this.calidad_precio) + "\nSabor:	" + String.valueOf(this.sabor) + "\nDiseno:	" + String.valueOf(this.diseno) + "\n\n";
 	}
 
 	public Long getId() {
@@ -99,13 +99,13 @@ public class Valoracion implements Serializable {
 	}
 
 
-	public int getDiseño() {
-		return diseño;
+	public int getDiseno() {
+		return diseno;
 	}
 
 
-	public void setDiseño(int diseño) {
-		this.diseño = diseño;
+	public void setDiseno(int diseno) {
+		this.diseno = diseno;
 	}
 	
 	

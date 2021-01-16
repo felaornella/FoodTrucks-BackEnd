@@ -88,7 +88,7 @@ public class Pruebas {
 		System.out.println("-----------------DEFINICION: FoodTruck");
 		FoodTruck f = new FoodTruck("Sale Con Pan","Sandwiches","Hacemos los mejores sandwiches de bondiola de la ciudad!","www.saleconpan.com","saleconpan","2215062190","saleconpan",0);
 		for (int i=1;i<10;i++) {
-			String nombre="ImagenN°"+String.valueOf(i);
+			String nombre="ImagenNn"+String.valueOf(i);
 			f.agregarImagen(nombre);
 		}
 		System.out.println("-----------------DEFINICION: Valoracion");
@@ -181,7 +181,7 @@ public class Pruebas {
 		f.setNombre("NombreActualizado");
 		System.out.println("-----------------Valoracion: Cambian Valores a todos 1");
 		v.setCalidad_precio(1);
-		v.setDiseño(1);
+		v.setDiseno(1);
 		v.setLimpieza(1);
 		v.setSabor(1);
 		v.setSimpatia(1);

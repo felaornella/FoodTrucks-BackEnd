@@ -22,7 +22,7 @@ public class FoodTrucker extends Usuario implements Serializable {
 	private Set<Solicitud> solicitudes= new HashSet<Solicitud>();
 	
 	@OneToMany(cascade= {CascadeType.ALL},
-			mappedBy = "dueño")
+			mappedBy = "dueno")
 	private Set<FoodTruck> foodtrucks= new HashSet<FoodTruck>();
 	
 	
@@ -61,11 +61,11 @@ public class FoodTrucker extends Usuario implements Serializable {
 
 	public void agregarFoodTruck(FoodTruck f) {
 		this.foodtrucks.add(f);
-		if(f.getDueño()==null){
-			f.setDueño(this);
+		if(f.getDueno()==null){
+			f.setDueno(this);
 		}else {
-			if (!f.getDueño().equals(this)){
-				f.setDueño(this);	
+			if (!f.getDueno().equals(this)){
+				f.setDueno(this);	
 			}
 		}
 	}

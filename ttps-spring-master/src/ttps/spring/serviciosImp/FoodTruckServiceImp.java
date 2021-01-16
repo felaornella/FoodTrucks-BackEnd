@@ -54,7 +54,7 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	}
 	
 	public void persistir(FoodTruckDTO ft) {
-		FoodTrucker owner = foodtruckerImp.recuperarPorId(ft.getDueño().getId());
+		FoodTrucker owner = foodtruckerImp.recuperarPorId(ft.getDueno().getId());
 		this.FoodTruckImp.persistir(new FoodTruck(ft,owner));
 	}
 
@@ -71,8 +71,8 @@ public class FoodTruckServiceImp implements FoodTruckService {
         foodtruck.setURL(ftruck.getURL());
         foodtruck.setWhatsapp(ftruck.getWhatsapp());
         foodtruck.setTipo_servicio(ftruck.getTipo_servicio());	
-        FoodTrucker owner = foodtruckerImp.recuperarPorId(ftruck.getDueño().getId());
-        foodtruck.setDueño(owner);
+        FoodTrucker owner = foodtruckerImp.recuperarPorId(ftruck.getDueno().getId());
+        foodtruck.setDueno(owner);
 		return this.FoodTruckImp.actualizar(foodtruck);
 	}
 
