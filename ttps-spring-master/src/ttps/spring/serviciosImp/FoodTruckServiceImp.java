@@ -49,7 +49,9 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	}
 	
 	public FoodTruck recuperarFoodTruckPorId(Long id) {
+		System.out.println("Recibi el ID: " + id);
 		FoodTruck ft= FoodTruckImp.recuperarPorId(id);
+		System.out.println("Encontre el foodtruck: " + ft.toString());
 		return ft;
 	}
 	
@@ -60,9 +62,13 @@ public class FoodTruckServiceImp implements FoodTruckService {
 
 	
 	public Boolean actualizar(Long id,FoodTruckDTO ftruck) {
+		System.out.println("ENTRE A METODO");
 		FoodTruck foodtruck = this.recuperarFoodTruckPorId(id);
 		if (foodtruck == null) {
+			System.out.println("Fue Verdadero");
 			return false;
+		}else {
+			System.out.println("Fue Falso, resul= " + foodtruck.toString());
 		}
 		foodtruck.setDescripcion(ftruck.getDescripcion());
         foodtruck.setFacebook(ftruck.getFacebook());
@@ -71,7 +77,11 @@ public class FoodTruckServiceImp implements FoodTruckService {
         foodtruck.setURL(ftruck.getURL());
         foodtruck.setWhatsapp(ftruck.getWhatsapp());
         foodtruck.setTipo_servicio(ftruck.getTipo_servicio());	
+        System.out.println("Termine las asignaciones");
+        System.out.println("Owner: " + ftruck.getDueno().toString());
+        System.out.println("El ID del dueño es : " + ftruck.getDueno().getId());
         FoodTrucker owner = foodtruckerImp.recuperarPorId(ftruck.getDueno().getId());
+        System.out.println("El dueño es: " + owner.toString());
         foodtruck.setDueno(owner);
 		return this.FoodTruckImp.actualizar(foodtruck);
 	}
