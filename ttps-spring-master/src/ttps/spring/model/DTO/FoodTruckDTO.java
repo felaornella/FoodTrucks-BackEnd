@@ -28,7 +28,7 @@ public class FoodTruckDTO implements Serializable {
 	
 	private Set<String> imagenes = new HashSet<String>();
 	
-	private FoodTruckerDTO dueño;
+	private FoodTruckerDTO dueno;
 	
 
 	public FoodTruckDTO() {}
@@ -44,7 +44,7 @@ public class FoodTruckDTO implements Serializable {
 		this.facebook = f.getFacebook();
 		this.puntaje = f.getPuntaje();
 		this.imagenes= f.getImagenes();
-		this.dueño= new FoodTruckerDTO(f.getDueño(), 1);
+		this.dueno= new FoodTruckerDTO(f.getDueno(), 1);
 	}
 
 	public String toString() {
@@ -65,12 +65,12 @@ public class FoodTruckDTO implements Serializable {
 		this.id = id;
 	}
 
-	public FoodTruckerDTO getDueño() {
-		return dueño;
+	public FoodTruckerDTO getDueno() {
+		return dueno;
 	}
 
-	public void setDueño(FoodTruckerDTO dueño) {
-		this.dueño = dueño;
+	public void setDueno(FoodTruckerDTO dueno) {
+		this.dueno = dueno;
 
 	}
 

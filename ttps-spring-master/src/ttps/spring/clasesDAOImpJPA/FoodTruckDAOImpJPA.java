@@ -25,7 +25,7 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id){
 		try {
 			Query consulta= this.getEntityManager().
-					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where dueño_id=" + id);
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where dueno_id=" + id);
 			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
 			List<FoodTruckDTO> resultadoFinal = new ArrayList<FoodTruckDTO>();
 			for (FoodTruck f: resultado) {
@@ -34,7 +34,7 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			}
 			return resultadoFinal;
 		} catch (RuntimeException e) {
-			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con dueño_id ingresado");
+			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con dueno_id ingresado");
 			return null;
 		}
 	}

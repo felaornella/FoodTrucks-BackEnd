@@ -28,6 +28,7 @@ public class FoodTruckRestController {
 			return new ResponseEntity<FoodTruckDTO>(ft,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
+			e.printStackTrace();
 			return new ResponseEntity<FoodTruckDTO>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -56,6 +57,18 @@ public class FoodTruckRestController {
 		
 		System.out.println(list.size());
 		return new ResponseEntity<List<FoodTruckDTO>>(list,HttpStatus.OK);
+	}
+	
+	@GetMapping("/recuperarIndividual/{id}")
+	public ResponseEntity<FoodTruckDTO>getOnlyFoodTruck(@PathVariable("id") String idPath){
+		System.out.println(idPath);
+		Long id = Long.valueOf(idPath);
+		FoodTruckDTO ftRec= this.foodtruckImp.recuperarPorId(id);
+		if(ftRec == null) {
+			return new ResponseEntity<FoodTruckDTO>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<FoodTruckDTO>(ftRec,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
