@@ -27,7 +27,7 @@ public class EventoDTO implements Serializable {
 	private String tipo_evento;
 	private String forma_pago;
 	
-	private Organizador organizador;
+	private OrganizadorDTO organizador;
 	
 	public EventoDTO() {}
 
@@ -68,13 +68,13 @@ public class EventoDTO implements Serializable {
 	}
 
 
-	public Organizador getOrganizador() {
+	public OrganizadorDTO getOrganizador() {
 		return organizador;
 	}
 
 
 	public void setOrganizador(Organizador organizador) {
-		this.organizador = organizador;
+		this.organizador = new OrganizadorDTO(organizador,1);
 	}
 
 

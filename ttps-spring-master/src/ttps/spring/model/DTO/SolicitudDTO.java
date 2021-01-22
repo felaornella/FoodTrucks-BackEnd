@@ -16,15 +16,15 @@ public class SolicitudDTO implements Serializable {
 	private Long id;
 	private String estado;
 	
-	private Valoracion valoracion;
+	private ValoracionDTO valoracion;
 	
-	private Evento evento;
+	private EventoDTO evento;
 	
-	private FoodTruck foodtruck;
+	private FoodTruckDTO foodtruck;
 	
-	private Organizador creador;
+	private OrganizadorDTO creador;
 	
-	private FoodTrucker solicitado;
+	private FoodTruckerDTO solicitado;
 	
 	public SolicitudDTO() {}
 	
@@ -47,20 +47,20 @@ public class SolicitudDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Organizador getCreador() {
+	public OrganizadorDTO getCreador() {
 		return creador;
 	}
 
 	public void setCreador(Organizador creador) {
-		this.creador = creador;
+		this.creador = new OrganizadorDTO(creador);
 	}
 
-	public FoodTrucker getSolicitado() {
+	public FoodTruckerDTO getSolicitado() {
 		return solicitado;
 	}
 
 	public void setSolicitado(FoodTrucker solicitado) {
-		this.solicitado = solicitado;
+		this.solicitado = new FoodTruckerDTO(solicitado);
 	}
 
 	public static long getSerialversionuid() {
@@ -68,10 +68,10 @@ public class SolicitudDTO implements Serializable {
 	}
 
 	public void setValoracion(Valoracion valoracion) {
-		this.valoracion = valoracion;
+		this.valoracion = new ValoracionDTO(valoracion);
 	}
 
-	public Valoracion getValoracion() {
+	public ValoracionDTO getValoracion() {
 		return valoracion;
 	}
 	
@@ -83,19 +83,19 @@ public class SolicitudDTO implements Serializable {
 		this.estado = estado;
 	}
 
-	public Evento getEvento() {
+	public EventoDTO getEvento() {
 		return evento;
 	}
 
 	public void setEvento(Evento evento) {
-		this.evento = evento;
+		this.evento = new EventoDTO(evento);
 	}
 
-	public FoodTruck getFoodtruck() {
+	public FoodTruckDTO getFoodtruck() {
 		return foodtruck;
 	}
 
 	public void setFoodtruck(FoodTruck foodtruck) {
-		this.foodtruck = foodtruck;
+		this.foodtruck = new FoodTruckDTO(foodtruck);
 	}
 }

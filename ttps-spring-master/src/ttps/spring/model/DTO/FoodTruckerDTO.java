@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import ttps.spring.model.Evento;
 import ttps.spring.model.FoodTruck;
 import ttps.spring.model.FoodTrucker;
 import ttps.spring.model.Solicitud;
@@ -20,9 +21,9 @@ public class FoodTruckerDTO extends UsuarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private Set<Solicitud> solicitudes= new HashSet<Solicitud>();
+	private Set<SolicitudDTO> solicitudes= new HashSet<SolicitudDTO>();
 	
-	private Set<FoodTruck> foodtrucks= new HashSet<FoodTruck>();
+	private Set<FoodTruckDTO> foodtrucks= new HashSet<FoodTruckDTO>();
 	
 	
 	
@@ -53,23 +54,29 @@ public class FoodTruckerDTO extends UsuarioDTO implements Serializable {
 		this.setTipo_usuario("FoodTrucker");
 	}
 	
-	public Set<Solicitud> getSolicitudes() {
+	public Set<SolicitudDTO> getSolicitudes() {
 		return solicitudes;
 	}
 
 
 	public void setSolicitudes(Set<Solicitud> solicitudes) {
-		this.solicitudes = solicitudes;
+		for (Solicitud s: solicitudes ) {
+			this.solicitudes.add(new SolicitudDTO(s));
+		}
+//		this.solicitudes = solicitudes;
 	}
 
 
-	public Set<FoodTruck> getFoodtrucks() {
+	public Set<FoodTruckDTO> getFoodtrucks() {
 		return foodtrucks;
 	}
 
 
 	public void setFoodtrucks(Set<FoodTruck> foodtrucks) {
-		this.foodtrucks = foodtrucks;
+		for (FoodTruck ft: foodtrucks) {
+			this.foodtrucks.add(new FoodTruckDTO(ft));
+		}
+//		this.foodtrucks = foodtrucks;
 	}
 
 
@@ -79,7 +86,7 @@ public class FoodTruckerDTO extends UsuarioDTO implements Serializable {
 
 
 	public void agregarFoodTruck(FoodTruck f) {
-		foodtrucks.add(f);
+		foodtrucks.add(new FoodTruckDTO(f));
 	}
 	
 	public void eliminarFoodTruck(FoodTruckDTO f) {
