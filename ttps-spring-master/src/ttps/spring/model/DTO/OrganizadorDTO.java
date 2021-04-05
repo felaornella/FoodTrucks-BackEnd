@@ -34,12 +34,6 @@ public class OrganizadorDTO extends UsuarioDTO implements Serializable{
 		this.setEmail(o.getEmail());
 		this.setUsername(o.getUsername());
 		this.setPassword(o.getPassword());
-		for (Solicitud s: o.getSolicitudes()) {
-			solicitudes.add(new SolicitudDTO(s));
-		}
-		for (Evento e: o.getEventos()) {
-			eventos.add(new EventoDTO(e));
-		}
 		this.setTipo_usuario("Organizador");
 //		this.setSolicitudes(o.getSolicitudes());
 //		this.setEventos(o.getEventos());

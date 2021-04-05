@@ -49,6 +49,14 @@ public class Solicitud implements Serializable {
 		setSolicitado(f.getDueno());
 	}
 	
+	public Solicitud(Evento e, FoodTruck f, Organizador o, FoodTrucker ft) {
+		this.estado="Enviada";
+		setEvento(e);
+		setFoodtruck(f);
+		setCreador(o);
+		setSolicitado(ft);
+	}
+	
 	public String toString() {
 		String ret="SOLICITUD\nEstado:";
 		//String[] estados= {"Enviada","Aceptada","Rechazada","Finalizada","Calificada"};

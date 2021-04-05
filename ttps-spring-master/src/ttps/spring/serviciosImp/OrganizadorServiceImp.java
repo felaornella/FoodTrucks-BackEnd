@@ -36,7 +36,7 @@ public class OrganizadorServiceImp implements OrganizadorService {
 	}
 	
 	public Organizador recuperarPorId(Long id) {
-		Organizador o= (Organizador)OrganizadorImp.recuperarPorId(id);
+		Organizador o= OrganizadorImp.recuperarPorId(id);
 		return o;
 	}
 	

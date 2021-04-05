@@ -21,7 +21,11 @@ public class UsuarioRestController {
 	UsuarioService usuarioImp;
 	
 	@Autowired
+<<<<<<< HEAD
 	SolicitudService solicitudImp;
+=======
+	SolicitudService soliImp;
+>>>>>>> c0029dada7ff17c2a9708e1149808190692ea2b6
 	
 	@GetMapping()
 	public ResponseEntity<List<UsuarioDTO>>getAllUsers(){
@@ -167,6 +171,7 @@ public class UsuarioRestController {
         }
     }
 	
+<<<<<<< HEAD
 	/* ------------------- */
 	@GetMapping(path="/{id}/solicitudes")
 	public ResponseEntity<List<SolicitudDTO>> getSolicitudes(@PathVariable("id") String idUsuario){ // @RequestHeader("token") String token
@@ -191,5 +196,84 @@ public class UsuarioRestController {
 			return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
 		}
 	}	
+=======
+	@PostMapping ("/nuevaSolicitud")
+    public ResponseEntity<SolicitudDTO> newSolicitud(@RequestBody SolicitudDTO soli, @RequestHeader("token")  String token){
+        try {
+            String[] tokenpartes = new String[2];
+            tokenpartes[1] = token.substring(token.length()-6, token.length());
+            tokenpartes[0] = token.substring(0, token.length()-6);
+>>>>>>> c0029dada7ff17c2a9708e1149808190692ea2b6
 
+            if (!tokenpartes[1].equals(String.valueOf(123456))) {
+				System.out.println(tokenpartes[1]);
+				return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
+			}
+        }catch(Exception e) {
+            return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+			soliImp.persistir(soli);
+			return new ResponseEntity<SolicitudDTO>(soli,HttpStatus.OK);
+		}catch (RuntimeException e) {
+			System.out.println("Problemas al Persistir Solicitud");
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+    }
+	
+	/*@GetMapping(path="/recuperarSolicitud/{id}")
+	public ResponseEntity<SolicitudDTO> getSolicitudEspecifica(@PathVariable("id") String idPath, @RequestHeader("token") String token){
+		Long id = Long.valueOf(idPath);
+		try {
+			String[] tokenPartes = new String[2];
+			tokenPartes[1]=token.substring(token.length()-6,token.length());
+			tokenPartes[0]=token.substring(0,token.length()-6);
+			
+			if (!tokenPartes[1].equals(String.valueOf(123456))) {
+				System.out.println(tokenPartes[1]);
+				return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
+			}
+		}catch(Exception e) {
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			SolicitudDTO soli = soliImp.recuperarPorId(id);
+			if(soli==null) {
+				return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<SolicitudDTO>(soli,HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+	}*/
+	
+	
+	//Metodo temporal para intentar solucionar el problema con los proxy (No soluciona, solo retorna una solicitud hasta donde llega a cargarla antes de romper para ver si al menos carga algo)
+	@GetMapping(path="/recuperarSolicitud/{id}")
+	public ResponseEntity<Solicitud> getSolicitudEspecifica(@PathVariable("id") String idPath, @RequestHeader("token") String token){
+		Long id = Long.valueOf(idPath);
+		try {
+			String[] tokenPartes = new String[2];
+			tokenPartes[1]=token.substring(token.length()-6,token.length());
+			tokenPartes[0]=token.substring(0,token.length()-6);
+			
+			if (!tokenPartes[1].equals(String.valueOf(123456))) {
+				System.out.println(tokenPartes[1]);
+				return new ResponseEntity<Solicitud>(HttpStatus.UNAUTHORIZED);
+			}
+		}catch(Exception e) {
+			return new ResponseEntity<Solicitud>(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			Solicitud soli = soliImp.recuperarSolicitudPorId(id);
+			if(soli==null) {
+				return new ResponseEntity<Solicitud>(HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Solicitud>(soli,HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<Solicitud>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 }
