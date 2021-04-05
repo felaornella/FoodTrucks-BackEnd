@@ -21,11 +21,8 @@ public class UsuarioRestController {
 	UsuarioService usuarioImp;
 	
 	@Autowired
-<<<<<<< HEAD
-	SolicitudService solicitudImp;
-=======
 	SolicitudService soliImp;
->>>>>>> c0029dada7ff17c2a9708e1149808190692ea2b6
+
 	
 	@GetMapping()
 	public ResponseEntity<List<UsuarioDTO>>getAllUsers(){
@@ -171,7 +168,7 @@ public class UsuarioRestController {
         }
     }
 	
-<<<<<<< HEAD
+
 	/* ------------------- */
 	@GetMapping(path="/{id}/solicitudes")
 	public ResponseEntity<List<SolicitudDTO>> getSolicitudes(@PathVariable("id") String idUsuario){ // @RequestHeader("token") String token
@@ -183,7 +180,7 @@ public class UsuarioRestController {
 				System.out.println("no existe usuario con id = "+ id);
 				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
 			}
-			List<SolicitudDTO> solicitudes = this.solicitudImp.solicitudesDeOrganizador(id);
+			List<SolicitudDTO> solicitudes = this.soliImp.solicitudesDeOrganizador(id);
 			if(solicitudes.isEmpty()) {
 				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NO_CONTENT);
 			}
@@ -196,14 +193,13 @@ public class UsuarioRestController {
 			return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
 		}
 	}	
-=======
+
 	@PostMapping ("/nuevaSolicitud")
     public ResponseEntity<SolicitudDTO> newSolicitud(@RequestBody SolicitudDTO soli, @RequestHeader("token")  String token){
         try {
             String[] tokenpartes = new String[2];
             tokenpartes[1] = token.substring(token.length()-6, token.length());
             tokenpartes[0] = token.substring(0, token.length()-6);
->>>>>>> c0029dada7ff17c2a9708e1149808190692ea2b6
 
             if (!tokenpartes[1].equals(String.valueOf(123456))) {
 				System.out.println(tokenpartes[1]);
