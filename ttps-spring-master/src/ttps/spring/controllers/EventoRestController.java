@@ -25,11 +25,11 @@ public class EventoRestController {
 
 
 	@PostMapping()
-	public ResponseEntity<EventoDTO> createEvento(@RequestBody Evento evento){
+	public ResponseEntity<EventoDTO> createEvento(@RequestBody EventoDTO evento){
 		try {
 			eventoService.persistir(evento); 
 			
-			return new ResponseEntity<EventoDTO>(new EventoDTO(evento),HttpStatus.OK);
+			return new ResponseEntity<EventoDTO>(evento,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
 			e.printStackTrace();

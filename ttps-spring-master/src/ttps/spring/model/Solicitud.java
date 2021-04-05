@@ -45,7 +45,8 @@ public class Solicitud implements Serializable {
 		this.estado="Enviada";
 		setEvento(e);
 		setFoodtruck(f);
-		
+		setCreador(e.getOrganizador());
+		setSolicitado(f.getDueno());
 	}
 	
 	public String toString() {

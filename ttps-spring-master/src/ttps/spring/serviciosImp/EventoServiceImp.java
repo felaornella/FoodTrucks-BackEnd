@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import ttps.spring.clasesDAO.EventoDAO;
 import ttps.spring.model.Evento;
+import ttps.spring.model.Organizador;
 import ttps.spring.model.DTO.EventoDTO;
 import ttps.spring.servicios.EventoService;
+import ttps.spring.servicios.OrganizadorService;
 
 @Service
 @Transactional
@@ -18,6 +20,10 @@ public class EventoServiceImp implements EventoService {
 	
 	@Autowired
 	private EventoDAO eventoImp;
+	
+	@Autowired
+	OrganizadorService organizadorImp;
+	
 
 	@Override
 	public List<EventoDTO> recuperarTodos() {
@@ -32,8 +38,9 @@ public class EventoServiceImp implements EventoService {
 	}
 
 	@Override
-	public void persistir(Evento f) {
-		this.eventoImp.persistir(f);		
+	public void persistir(EventoDTO e) {
+		Organizador org = organizadorImp.recuperarPorId(e.getOrganizador().getId());
+		this.eventoImp.persistir(new Evento(e,org));		
 	}
 
 	@Override

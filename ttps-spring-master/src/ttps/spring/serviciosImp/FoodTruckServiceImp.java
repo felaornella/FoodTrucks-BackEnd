@@ -36,7 +36,7 @@ public class FoodTruckServiceImp implements FoodTruckService {
         }
         return FoodTrucksFinal;
     }
-	
+	 
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id){
 		return this.FoodTruckImp.foodTrucksDeFtrucker(id);
 	}

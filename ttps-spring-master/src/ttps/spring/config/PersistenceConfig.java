@@ -16,7 +16,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration
+@Configuration 
 @EnableTransactionManagement
 public class PersistenceConfig {
 
@@ -36,8 +36,8 @@ public class PersistenceConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-		driverManagerDataSource.setUsername("ttps");
-		driverManagerDataSource.setPassword("ttps");
+		driverManagerDataSource.setUsername("root");
+		driverManagerDataSource.setPassword("root");
 		driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/java_spring?serverTimezone=UTC&useSSL=false");
 		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		return driverManagerDataSource;
@@ -53,7 +53,7 @@ public class PersistenceConfig {
 	
 	private Properties additionalProperties() {
 		Properties properties = new Properties();		
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update"); 
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
 		properties.setProperty("hibernate.default_schema", "java_spring");
 		return properties;

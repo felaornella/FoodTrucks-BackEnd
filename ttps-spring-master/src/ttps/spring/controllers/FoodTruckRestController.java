@@ -24,7 +24,7 @@ public class FoodTruckRestController {
 	public ResponseEntity<FoodTruckDTO> createFoodTruck(@RequestBody FoodTruckDTO ft){
 		try {
 			foodtruckImp.persistir(ft); 
-			
+			 
 			return new ResponseEntity<FoodTruckDTO>(ft,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
