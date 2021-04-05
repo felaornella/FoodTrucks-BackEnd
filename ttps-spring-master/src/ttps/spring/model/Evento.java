@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import ttps.spring.model.DTO.EventoDTO;
+
 @Entity
 @Table(name="eventos")
 public class Evento implements Serializable {
@@ -22,7 +24,7 @@ public class Evento implements Serializable {
 	private int codigo_postal;
 	private String provincia;
 	private String geolocalizacion; 
-	private Date fecha_hora;
+	private String fecha_hora;
 	private String email;
 	private String tel_contacto;
 	private String descripcion;
@@ -40,13 +42,14 @@ public class Evento implements Serializable {
 
 
 
-	public Evento(String nombre, String direccion, int codigo_postal, String provincia, Date fecha_hora, String email,
+	public Evento(String nombre, String direccion, int codigo_postal, String provincia, String fecha_hora, String email,
 			String tel_contacto, String descripcion, String tipo_evento, String forma_pago) {
 		super();
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.codigo_postal = codigo_postal;
 		this.provincia = provincia;
+		
 		this.fecha_hora = fecha_hora;
 		this.email = email;
 		this.tel_contacto = tel_contacto;
@@ -55,6 +58,21 @@ public class Evento implements Serializable {
 		this.forma_pago = forma_pago;
 	}
 
+	public Evento(EventoDTO e, Organizador o) {
+		super();
+		this.nombre = e.getNombre();
+		this.direccion = e.getDireccion();
+		this.codigo_postal = e.getCodigo_postal();
+		this.provincia = e.getProvincia();
+		this.fecha_hora = e.getFecha_hora();
+		this.email = e.getEmail();
+		this.tel_contacto = e.getTel_contacto();
+		this.descripcion = e.getDescripcion();
+		this.tipo_evento = e.getTipo_evento();
+		this.forma_pago = e.getForma_pago();
+		this.organizador= o;
+	}
+	
 	public String toString() {
 		String ret="EVENTO\n";
 		ret = ret + "ID: " + String.valueOf(this.id) + "\nNombre: " + this.nombre;
@@ -137,11 +155,11 @@ public class Evento implements Serializable {
 		this.geolocalizacion = geolocalizacion;
 	}
 
-	public Date getFecha_hora() {
+	public String getFecha_hora() {
 		return fecha_hora;
 	}
 
-	public void setFecha_hora(Date fecha_hora) {
+	public void setFecha_hora(String fecha_hora) {
 		this.fecha_hora = fecha_hora;
 	}
 

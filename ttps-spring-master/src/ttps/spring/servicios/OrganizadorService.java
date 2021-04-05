@@ -17,7 +17,9 @@ public interface OrganizadorService {
 
 	public List<OrganizadorDTO> recuperarTodos();
     
-	public OrganizadorDTO recuperarPorId(Long id) ;
+	public OrganizadorDTO recuperarPorIdDTO(Long id) ;
+	
+	public Organizador recuperarPorId(Long id) ;
 	
 	public void persistir(Organizador o);
 

@@ -30,9 +30,14 @@ public class OrganizadorServiceImp implements OrganizadorService {
         return OrganizadorsFinal;
     }
 	
-	public OrganizadorDTO recuperarPorId(Long id) {
-		Organizador o= OrganizadorImp.recuperarPorId(id);
+	public OrganizadorDTO recuperarPorIdDTO(Long id) {
+		Organizador o= (Organizador)OrganizadorImp.recuperarPorId(id);
 		return new OrganizadorDTO(o);
+	}
+	
+	public Organizador recuperarPorId(Long id) {
+		Organizador o= (Organizador)OrganizadorImp.recuperarPorId(id);
+		return o;
 	}
 	
 	public void persistir(Organizador Organizador) {
