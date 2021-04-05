@@ -36,7 +36,7 @@ public class FoodTruckServiceImp implements FoodTruckService {
         }
         return FoodTrucksFinal;
     }
-	
+	 
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id){
 		return this.FoodTruckImp.foodTrucksDeFtrucker(id);
 	}
@@ -47,7 +47,7 @@ public class FoodTruckServiceImp implements FoodTruckService {
 		
 		return new FoodTruckDTO(ft);
 	}
-	
+
 	public FoodTruck recuperarFoodTruckPorId(Long id) {
 		System.out.println("Recibi el ID: " + id);
 		FoodTruck ft= FoodTruckImp.recuperarPorId(id);

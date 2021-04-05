@@ -12,6 +12,10 @@ import ttps.spring.clasesDAO.*;
 import ttps.spring.clasesDAOImpJPA.SolicitudDAOImpJPA;
 import ttps.spring.model.*;
 import ttps.spring.model.DTO.*;
+import ttps.spring.servicios.EventoService;
+import ttps.spring.servicios.FoodTruckService;
+import ttps.spring.servicios.FoodTruckerService;
+import ttps.spring.servicios.OrganizadorService;
 import ttps.spring.servicios.SolicitudService;
 import ttps.spring.servicios.SolicitudService;
 
@@ -21,6 +25,18 @@ public class SolicitudServiceImp implements SolicitudService {
 
 	@Autowired
 	private SolicitudDAO SolicitudImp;
+	
+	@Autowired
+	FoodTruckService ftService;
+	
+	@Autowired
+	FoodTruckerService ftruckerService;
+	
+	@Autowired
+	OrganizadorService orgService;
+	
+	@Autowired
+	EventoService evService;
 	
 	public List<SolicitudDTO> recuperarTodos(){
         List<Solicitud> sts = SolicitudImp.recuperarTodos();
@@ -36,12 +52,30 @@ public class SolicitudServiceImp implements SolicitudService {
 		return new SolicitudDTO(s);
 	}
 	
-	public void persistir(Solicitud Solicitud) {
-		this.SolicitudImp.persistir(Solicitud);
+	public Solicitud recuperarSolicitudPorId(Long id) {
+		Solicitud s= SolicitudImp.recuperarPorId(id);
+		return (s);
+	}
+	
+	public void persistir(SolicitudDTO soli) {
+		System.out.println("Llegue hasta el persistir");
+		Long evID=soli.getEvento().getId();
+		Long ftID=soli.getFoodtruck().getId();
+		Long orID=soli.getCreador().getId();
+		Long ftrID=soli.getSolicitado().getId();
+		Evento evento = evService.recuperarPorId(evID);
+		FoodTruck foodtruck = ftService.recuperarFoodTruckPorId(ftID);
+		Organizador organizador = orgService.recuperarPorId(orID);
+		FoodTrucker foodtrucker = ftruckerService.recuperarPorId(ftrID);
+		this.SolicitudImp.persistir(new Solicitud(evento,foodtruck,organizador,foodtrucker));
 	}
 
 	public void actualizar(Solicitud Solicitud) {
 		this.SolicitudImp.actualizar(Solicitud);
+	}
+	
+	public List<SolicitudDTO> solicitudesDeOrganizador(Long id) {
+		return this.SolicitudImp.solicitudesDeOrganizador(id);
 	}
 
 }

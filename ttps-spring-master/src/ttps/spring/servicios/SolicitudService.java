@@ -19,8 +19,12 @@ public interface SolicitudService {
     
 	public SolicitudDTO recuperarPorId(Long id) ;
 	
-	public void persistir(Solicitud s);
+	public Solicitud recuperarSolicitudPorId(Long id); 
+	
+	public void persistir(SolicitudDTO s);
 
 	public void actualizar(Solicitud s);
+
+	public List<SolicitudDTO> solicitudesDeOrganizador(Long id);
 
 }

@@ -32,7 +32,7 @@ public class FoodTruckerServiceImp implements FoodTruckerService{
     }
 	
 	public FoodTrucker recuperarPorId(Long id) {
-		FoodTrucker f= (FoodTrucker)foodtruckerImp.recuperarPorId(id);
+		FoodTrucker f= foodtruckerImp.recuperarPorId(id);
 		return f;
 	}
 	

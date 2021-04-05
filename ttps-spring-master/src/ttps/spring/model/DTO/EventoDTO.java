@@ -20,14 +20,14 @@ public class EventoDTO implements Serializable {
 	private int codigo_postal;
 	private String provincia;
 	private String geolocalizacion; 
-	private Date fecha_hora;
+	private String fecha_hora;
 	private String email;
 	private String tel_contacto;
 	private String descripcion;
 	private String tipo_evento;
 	private String forma_pago;
 	
-	private Organizador organizador;
+	private OrganizadorDTO organizador;
 	
 	public EventoDTO() {}
 
@@ -50,7 +50,7 @@ public class EventoDTO implements Serializable {
 		String ret="EVENTO\n";
 		ret = ret + "ID: " + String.valueOf(this.id) + "\nNombre: " + this.nombre;
 		ret = ret + "\nDireccion: " + this.direccion + " - Codigo Postal: " + String.valueOf(this.codigo_postal);
-		ret = ret + "\nProvincia: " + this.provincia + " - Fecha: " + String.valueOf(this.fecha_hora);
+		ret = ret + "\nProvincia: " + this.provincia + " - Fecha: " + this.fecha_hora;
 		ret = ret + "\nTelefono Contacto: " + this.tel_contacto + " - Email Contacto: " + this.email;
 		ret = ret + "\nDescripcion: " + this.descripcion + " - Tipo Evento: " + this.tipo_evento + " - Forma de Pago: " + this.forma_pago;
 		return ret;
@@ -68,13 +68,13 @@ public class EventoDTO implements Serializable {
 	}
 
 
-	public Organizador getOrganizador() {
+	public OrganizadorDTO getOrganizador() {
 		return organizador;
 	}
 
 
 	public void setOrganizador(Organizador organizador) {
-		this.organizador = organizador;
+		this.organizador = new OrganizadorDTO(organizador,1);
 	}
 
 
@@ -123,11 +123,11 @@ public class EventoDTO implements Serializable {
 		this.geolocalizacion = geolocalizacion;
 	}
 
-	public Date getFecha_hora() {
+	public String getFecha_hora() {
 		return fecha_hora;
 	}
 
-	public void setFecha_hora(Date fecha_hora) {
+	public void setFecha_hora(String fecha_hora) {
 		this.fecha_hora = fecha_hora;
 	}
 
