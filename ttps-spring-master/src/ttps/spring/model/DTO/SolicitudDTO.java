@@ -30,13 +30,18 @@ public class SolicitudDTO implements Serializable {
 	
 	public SolicitudDTO(Solicitud s) {
 		setId(s.getId());
-		setValoracion(s.getValoracion());
-		setCreador(s.getCreador());
-		setSolicitado(s.getSolicitado());
-		setEvento(s.getEvento());
-		setFoodtruck(s.getFoodtruck());
 		setEstado(s.getEstado());
+		setEvento(new EventoDTO(s.getEvento()));
+		setFoodtruck(new FoodTruckDTO(s.getFoodtruck()));
+		if (s.getValoracion()!= null){
+			setValoracion(new ValoracionDTO(s.getValoracion()));
+		}else {
+			setValoracion(null);
+		}
 		
+		setCreador(new OrganizadorDTO(s.getCreador()));
+		setSolicitado(new FoodTruckerDTO(s.getSolicitado()));
+
 	}
 	
 	public Long getId() {
@@ -51,24 +56,24 @@ public class SolicitudDTO implements Serializable {
 		return creador;
 	}
 
-	public void setCreador(Organizador creador) {
-		this.creador = new OrganizadorDTO(creador);
+	public void setCreador(OrganizadorDTO creador) {
+		this.creador = creador;
 	}
 
 	public FoodTruckerDTO getSolicitado() {
 		return solicitado;
 	}
 
-	public void setSolicitado(FoodTrucker solicitado) {
-		this.solicitado = new FoodTruckerDTO(solicitado);
+	public void setSolicitado(FoodTruckerDTO solicitado) {
+		this.solicitado = solicitado;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public void setValoracion(Valoracion valoracion) {
-		this.valoracion = new ValoracionDTO(valoracion);
+	public void setValoracion(ValoracionDTO valoracion) {
+		this.valoracion = valoracion;
 	}
 
 	public ValoracionDTO getValoracion() {
@@ -87,15 +92,15 @@ public class SolicitudDTO implements Serializable {
 		return evento;
 	}
 
-	public void setEvento(Evento evento) {
-		this.evento = new EventoDTO(evento);
+	public void setEvento(EventoDTO evento) {
+		this.evento = evento;
 	}
 
 	public FoodTruckDTO getFoodtruck() {
 		return foodtruck;
 	}
 
-	public void setFoodtruck(FoodTruck foodtruck) {
-		this.foodtruck = new FoodTruckDTO(foodtruck);
+	public void setFoodtruck(FoodTruckDTO foodtruck) {
+		this.foodtruck = foodtruck;
 	}
 }

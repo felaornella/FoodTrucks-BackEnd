@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +37,17 @@ public class EventoRestController {
 			e.printStackTrace();
 			return new ResponseEntity<EventoDTO>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/recuperarIndividual/{id}")
+	public ResponseEntity<EventoDTO>getOnlyFoodTruck(@PathVariable("id") String idPath){
+		System.out.println(idPath);
+		Long id = Long.valueOf(idPath);
+		EventoDTO ev= this.eventoService.recuperarPorIdDTO(id);
+		if(ev == null) {
+			return new ResponseEntity<EventoDTO>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<EventoDTO>(ev,HttpStatus.OK);
 	}
 }

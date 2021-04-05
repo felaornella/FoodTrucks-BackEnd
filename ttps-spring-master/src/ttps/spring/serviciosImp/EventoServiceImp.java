@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import ttps.spring.clasesDAO.EventoDAO;
 import ttps.spring.model.Evento;
+import ttps.spring.model.FoodTruck;
 import ttps.spring.model.Organizador;
 import ttps.spring.model.DTO.EventoDTO;
+import ttps.spring.model.DTO.FoodTruckDTO;
 import ttps.spring.servicios.EventoService;
 import ttps.spring.servicios.OrganizadorService;
 
@@ -32,9 +34,10 @@ public class EventoServiceImp implements EventoService {
 	}
 
 	@Override
-	public EventoDTO recuperarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Evento recuperarPorId(Long id) {
+		Evento e= eventoImp.recuperarPorId(id);
+		
+		return e;
 	}
 
 	@Override
@@ -47,6 +50,12 @@ public class EventoServiceImp implements EventoService {
 	public void actualizar(Evento f) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public EventoDTO recuperarPorIdDTO(Long id) {
+		Evento e= eventoImp.recuperarPorId(id);
+		return new EventoDTO(e);
 	}
 
 }

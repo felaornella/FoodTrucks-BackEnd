@@ -13,7 +13,9 @@ public interface EventoService {
 	
 	public List<EventoDTO> recuperarTodos();
     
-	public EventoDTO recuperarPorId(Long id) ;
+	public Evento recuperarPorId(Long id) ;
+	
+	public EventoDTO recuperarPorIdDTO(Long id) ;
 	
 	public void persistir(EventoDTO f);
 
