@@ -26,6 +26,8 @@ public interface FoodTruckService {
 
 	public Boolean actualizar(Long id, FoodTruckDTO f);
 	
+	public Boolean agregarFoto(Long id, String f);
+	
 	public void borrar (FoodTruck f);
 
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
