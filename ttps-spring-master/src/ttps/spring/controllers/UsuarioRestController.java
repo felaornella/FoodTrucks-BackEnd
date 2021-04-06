@@ -22,6 +22,7 @@ public class UsuarioRestController {
 	
 	@Autowired
 	SolicitudService soliImp;
+
 	
 	@GetMapping()
 	public ResponseEntity<List<UsuarioDTO>>getAllUsers(){
@@ -168,6 +169,32 @@ public class UsuarioRestController {
         }
     }
 	
+
+	/* ------------------- */
+	@GetMapping(path="/{id}/solicitudes")
+	public ResponseEntity<List<SolicitudDTO>> getSolicitudes(@PathVariable("id") String idUsuario){ // @RequestHeader("token") String token
+		Long id = Long.valueOf(idUsuario);
+
+		try {
+			UsuarioDTO user = usuarioImp.recuperarPorId(id);
+			if(user==null) {
+				System.out.println("no existe usuario con id = "+ id);
+				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
+			}
+			List<SolicitudDTO> solicitudes = this.soliImp.solicitudesDeOrganizador(id);
+			if(solicitudes.isEmpty()) {
+				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NO_CONTENT);
+			}
+			
+			System.out.println(solicitudes.size()+" elementos retornados");
+			
+			return new ResponseEntity<List<SolicitudDTO>>(solicitudes,HttpStatus.OK);
+					
+		}catch (Exception e) {
+			return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
+		}
+	}	
+
 	@PostMapping ("/nuevaSolicitud")
     public ResponseEntity<SolicitudDTO> newSolicitud(@RequestBody SolicitudDTO soli, @RequestHeader("token")  String token){
         try {

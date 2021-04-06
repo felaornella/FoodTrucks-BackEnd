@@ -25,4 +25,6 @@ public interface SolicitudService {
 
 	public void actualizar(Solicitud s);
 
+	public List<SolicitudDTO> solicitudesDeOrganizador(Long id);
+
 }

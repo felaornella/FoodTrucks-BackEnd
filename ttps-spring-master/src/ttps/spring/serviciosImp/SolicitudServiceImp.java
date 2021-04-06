@@ -73,5 +73,9 @@ public class SolicitudServiceImp implements SolicitudService {
 	public void actualizar(Solicitud Solicitud) {
 		this.SolicitudImp.actualizar(Solicitud);
 	}
+	
+	public List<SolicitudDTO> solicitudesDeOrganizador(Long id) {
+		return this.SolicitudImp.solicitudesDeOrganizador(id);
+	}
 
 }
