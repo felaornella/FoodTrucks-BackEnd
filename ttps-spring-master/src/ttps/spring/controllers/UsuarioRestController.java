@@ -23,6 +23,8 @@ public class UsuarioRestController {
 	@Autowired
 	SolicitudService soliImp;
 
+	@Autowired
+	ValoracionService valoracionImp;
 	
 	@GetMapping()
 	public ResponseEntity<List<UsuarioDTO>>getAllUsers(){
@@ -200,7 +202,7 @@ public class UsuarioRestController {
             String[] tokenpartes = new String[2];
             tokenpartes[1] = token.substring(token.length()-6, token.length());
             tokenpartes[0] = token.substring(0, token.length()-6);
-
+            
             if (!tokenpartes[1].equals(String.valueOf(123456))) {
 				System.out.println(tokenpartes[1]);
 				return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
@@ -210,6 +212,7 @@ public class UsuarioRestController {
         }
         try {
 			soliImp.persistir(soli);
+			System.out.println("Persistio Solicitud");
 			return new ResponseEntity<SolicitudDTO>(soli,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Solicitud");
@@ -217,7 +220,7 @@ public class UsuarioRestController {
 		}
     }
 	
-	/*@GetMapping(path="/recuperarSolicitud/{id}")
+	@GetMapping(path="/recuperarSolicitud/{id}")
 	public ResponseEntity<SolicitudDTO> getSolicitudEspecifica(@PathVariable("id") String idPath, @RequestHeader("token") String token){
 		Long id = Long.valueOf(idPath);
 		try {
@@ -241,11 +244,11 @@ public class UsuarioRestController {
 		}catch (Exception e) {
 			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
 		}
-	}*/
+	}
 	
 	
 	//Metodo temporal para intentar solucionar el problema con los proxy (No soluciona, solo retorna una solicitud hasta donde llega a cargarla antes de romper para ver si al menos carga algo)
-	@GetMapping(path="/recuperarSolicitud/{id}")
+	/*@GetMapping(path="/recuperarSolicitud/{id}")
 	public ResponseEntity<Solicitud> getSolicitudEspecifica(@PathVariable("id") String idPath, @RequestHeader("token") String token){
 		Long id = Long.valueOf(idPath);
 		try {
@@ -269,7 +272,19 @@ public class UsuarioRestController {
 		}catch (Exception e) {
 			return new ResponseEntity<Solicitud>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}*/
 	
+
+	@PostMapping("/valorarSolicitud/{id}")
+	public ResponseEntity<ValoracionDTO> newValoracion(@PathVariable("id") String idSolicitud, @RequestBody Valoracion valoracion){
+		Long id = Long.valueOf(idSolicitud);
+		try {
+			this.soliImp.agregarValoracionASolicitud(id,valoracion);
+			return new ResponseEntity<ValoracionDTO>(HttpStatus.OK);
+		}catch (RuntimeException e) {
+			System.out.println("Problemas al Persistir valoracion");
+			return new ResponseEntity<ValoracionDTO>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 }

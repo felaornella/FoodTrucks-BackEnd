@@ -29,9 +29,10 @@ public class EventoRestController {
 	@PostMapping()
 	public ResponseEntity<EventoDTO> createEvento(@RequestBody EventoDTO evento){
 		try {
-			eventoService.persistir(evento); 
+			Evento ev = eventoService.persistir(evento); 
+
+			return new ResponseEntity<EventoDTO>(new EventoDTO(ev),HttpStatus.OK);
 			
-			return new ResponseEntity<EventoDTO>(evento,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
 			e.printStackTrace();
@@ -41,13 +42,21 @@ public class EventoRestController {
 	
 	@GetMapping("/recuperarIndividual/{id}")
 	public ResponseEntity<EventoDTO>getOnlyFoodTruck(@PathVariable("id") String idPath){
-		System.out.println(idPath);
-		Long id = Long.valueOf(idPath);
-		EventoDTO ev= this.eventoService.recuperarPorIdDTO(id);
-		if(ev == null) {
-			return new ResponseEntity<EventoDTO>(HttpStatus.NO_CONTENT);
+		try {
+			System.out.println(idPath);
+			Long id = Long.valueOf(idPath);
+			Evento ev = this.eventoService.recuperarPorId(id);
+//			EventoDTO ev= this.eventoService.recuperarPorIdDTO(id);
+			if(ev == null) {
+				System.out.println("no se encontro evento con id "+id);
+				return new ResponseEntity<EventoDTO>(HttpStatus.NO_CONTENT);
+			}
+			EventoDTO evento = new EventoDTO(ev);
+			return new ResponseEntity<EventoDTO>(evento,HttpStatus.OK);
+		}catch(RuntimeException e) {
+			System.out.println("Problemas al recuperar evento");
+			return new ResponseEntity<EventoDTO>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<EventoDTO>(ev,HttpStatus.OK);
 	}
 }

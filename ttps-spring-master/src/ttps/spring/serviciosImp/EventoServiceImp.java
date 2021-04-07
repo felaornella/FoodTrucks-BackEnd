@@ -36,14 +36,15 @@ public class EventoServiceImp implements EventoService {
 	@Override
 	public Evento recuperarPorId(Long id) {
 		Evento e= eventoImp.recuperarPorId(id);
-		
+		e.getOrganizador().getApellido();
 		return e;
 	}
 
 	@Override
-	public void persistir(EventoDTO e) {
+	public Evento persistir(EventoDTO e) {
 		Organizador org = organizadorImp.recuperarPorId(e.getOrganizador().getId());
-		this.eventoImp.persistir(new Evento(e,org));		
+		Evento evento = this.eventoImp.persistir(new Evento(e,org));	
+		return evento;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ttps.spring.clasesDAOImpJPA.UsuarioDAOImpJPA;
 import ttps.spring.model.Solicitud;
 import ttps.spring.model.Usuario;
+import ttps.spring.model.Valoracion;
 import ttps.spring.model.DTO.SolicitudDTO;
 import ttps.spring.model.DTO.UsuarioDTO;
 
@@ -26,5 +27,7 @@ public interface SolicitudService {
 	public void actualizar(Solicitud s);
 
 	public List<SolicitudDTO> solicitudesDeOrganizador(Long id);
+
+	public void agregarValoracionASolicitud(Long id, Valoracion valoracion);
 
 }
