@@ -86,6 +86,17 @@ public class FoodTruckServiceImp implements FoodTruckService {
 		return this.FoodTruckImp.actualizar(foodtruck);
 	}
 
+	public Boolean agregarFoto(Long id,String pic) {
+		System.out.println("ENTRE A ADD_PIC");
+		FoodTruck foodtruck = this.recuperarFoodTruckPorId(id);
+		if (foodtruck == null) {
+			System.out.println("Fue Null");
+			return false;
+		}
+		foodtruck.agregarImagen(pic);
+		return this.FoodTruckImp.actualizar(foodtruck);
+	}
+	
 	public void borrar(FoodTruck FoodTruck) {
 		this.FoodTruckImp.borrar(FoodTruck);
 	}

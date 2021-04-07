@@ -102,6 +102,7 @@ public class UsuarioRestController {
 	
 	@PostMapping("/autenticacion")
 	public ResponseEntity<UsuarioDTO> autenticar(@RequestHeader Map<String,String> mapHeaders){
+		System.out.println("ENTRE");
 		String username=null;
 		String clave=null;
 		for (Map.Entry<String, String> entry : mapHeaders.entrySet()) {
