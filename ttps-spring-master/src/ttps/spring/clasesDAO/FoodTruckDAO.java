@@ -8,5 +8,7 @@ import ttps.spring.model.DTO.FoodTruckDTO;
 public interface FoodTruckDAO extends GenericDAO<FoodTruck>{
 
 	List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
+	
+	List<String> getImages(Long id);
 
 }

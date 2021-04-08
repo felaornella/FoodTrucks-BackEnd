@@ -41,6 +41,10 @@ public class FoodTruckServiceImp implements FoodTruckService {
 		return this.FoodTruckImp.foodTrucksDeFtrucker(id);
 	}
 	
+	public List<String> getImages(Long id){
+		return this.FoodTruckImp.getImages(id);
+	}
+	
 	
 	public FoodTruckDTO recuperarPorId(Long id) {
 		FoodTruck ft= FoodTruckImp.recuperarPorId(id);

@@ -29,6 +29,8 @@ public interface FoodTruckService {
 	public Boolean agregarFoto(Long id, String f);
 	
 	public void borrar (FoodTruck f);
+	
+	public List<String> getImages (Long id);
 
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
 
