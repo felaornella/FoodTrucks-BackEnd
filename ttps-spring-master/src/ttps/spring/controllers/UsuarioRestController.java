@@ -88,6 +88,7 @@ public class UsuarioRestController {
 
 	@PostMapping("/organizador")
 	public ResponseEntity<OrganizadorDTO> createUserOrganizador(@RequestBody Organizador usu){
+		System.out.println("Entre al metodo");
 		try {
 			usuarioImp.persistir(usu);
 			return new ResponseEntity<OrganizadorDTO>(new OrganizadorDTO(usu),HttpStatus.OK);
