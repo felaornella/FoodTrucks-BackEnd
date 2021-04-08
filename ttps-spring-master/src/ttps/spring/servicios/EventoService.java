@@ -17,7 +17,7 @@ public interface EventoService {
 	
 	public EventoDTO recuperarPorIdDTO(Long id) ;
 	
-	public void persistir(EventoDTO f);
+	public Evento persistir(EventoDTO f);
 
 	public void actualizar(Evento f);
 }

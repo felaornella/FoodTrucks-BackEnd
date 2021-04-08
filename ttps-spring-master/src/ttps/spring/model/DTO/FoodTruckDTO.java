@@ -46,6 +46,20 @@ public class FoodTruckDTO implements Serializable {
 		this.imagenes= f.getImagenes();
 		this.dueno= new FoodTruckerDTO(f.getDueno(), 1);
 	}
+	
+	/*-----*/
+	public FoodTruckDTO(FoodTruck f, int n) {
+		this.id = f.getId();
+		this.nombre = f.getNombre();
+		this.tipo_servicio = f.getTipo_servicio();
+		this.descripcion = f.getDescripcion();
+		this.url = f.getURL();
+		this.instagram = f.getInstagram();
+		this.whatsapp = f.getWhatsapp();
+		this.facebook = f.getFacebook();
+		this.puntaje = f.getPuntaje();
+		this.imagenes= f.getImagenes();
+	}
 
 	public String toString() {
 		String ret ="FOODTRUCK";

@@ -58,7 +58,6 @@ public class SolicitudServiceImp implements SolicitudService {
 	}
 	
 	public void persistir(SolicitudDTO soli) {
-		System.out.println("Llegue hasta el persistir");
 		Long evID=soli.getEvento().getId();
 		Long ftID=soli.getFoodtruck().getId();
 		Long orID=soli.getCreador().getId();
@@ -76,6 +75,12 @@ public class SolicitudServiceImp implements SolicitudService {
 	
 	public List<SolicitudDTO> solicitudesDeOrganizador(Long id) {
 		return this.SolicitudImp.solicitudesDeOrganizador(id);
+	}
+	
+	public void agregarValoracionASolicitud(Long id, Valoracion v) {
+		Solicitud s= SolicitudImp.recuperarPorId(id);
+		s.setValoracion(v);
+		SolicitudImp.actualizar(s);
 	}
 
 }
