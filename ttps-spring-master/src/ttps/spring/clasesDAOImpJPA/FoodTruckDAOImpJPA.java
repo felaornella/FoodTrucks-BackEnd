@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+
 public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements FoodTruckDAO {
 
 	public FoodTruckDAOImpJPA() {
@@ -35,6 +36,19 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			return resultadoFinal;
 		} catch (RuntimeException e) {
 			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con dueno_id ingresado");
+			return null;
+		}
+	}
+	
+	@Transactional
+	public List<String> getImages(Long id){
+		try {
+			Query consulta= this.getEntityManager().
+					createQuery("SELECT file_name FROM imagenes_foodtrucks where id_foodtruck=" + id + ";");
+			List<String> resultado = (List<String>) consulta.getResultList();
+			return resultado;
+		} catch (RuntimeException e) {
+			System.out.println("Problema al imagenes para "+ this.getPersistentClass().getSimpleName());
 			return null;
 		}
 	}

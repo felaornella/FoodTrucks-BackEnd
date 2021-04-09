@@ -31,16 +31,16 @@ public class SolicitudDTO implements Serializable {
 	public SolicitudDTO(Solicitud s) {
 		setId(s.getId());
 		setEstado(s.getEstado());
-		setEvento(new EventoDTO(s.getEvento()));
-		setFoodtruck(new FoodTruckDTO(s.getFoodtruck()));
+		setEvento(new EventoDTO(s.getEvento(), 1));
+		setFoodtruck(new FoodTruckDTO(s.getFoodtruck(), 1));
 		if (s.getValoracion()!= null){
 			setValoracion(new ValoracionDTO(s.getValoracion()));
 		}else {
 			setValoracion(null);
 		}
 		
-		setCreador(new OrganizadorDTO(s.getCreador()));
-		setSolicitado(new FoodTruckerDTO(s.getSolicitado()));
+		setCreador(new OrganizadorDTO(s.getCreador(),1));
+		setSolicitado(new FoodTruckerDTO(s.getSolicitado(),1));
 
 	}
 	

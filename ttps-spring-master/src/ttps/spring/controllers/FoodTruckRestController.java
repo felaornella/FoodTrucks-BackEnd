@@ -96,4 +96,34 @@ public class FoodTruckRestController {
             return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
         }
     }
+	
+	//NO FUNCIONA, NO SE PORQUE, PERO EN TEORIA RECIBE UN STRING EN BASE64 DE LA IMAGEN PARA GUARDARLO. DESPUES ANGULAR LO DECODIFICA Y LISTO---------------------------------------
+	@PostMapping("/pruebaImagen/{id}")
+    public ResponseEntity<FoodTruck> agregarImagenAFoodtruck(@PathVariable("id") String idPath,@RequestBody String pic){
+		Long id = Long.valueOf(idPath);
+		System.out.println("LLEGUE, RECIBI ESTO: \n" + pic);
+		try {
+			Boolean check= foodtruckImp.agregarFoto(id,pic);
+	        if(!check) {
+	            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
+	        }
+	        return new ResponseEntity<FoodTruck>(HttpStatus.OK);
+		}catch(Exception e) {
+            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
+        }
+    }
+	
+	@GetMapping("{id}/imagenes")
+	public ResponseEntity<List<String>>getFoodTruckImagesById(@PathVariable("id") String idPath){
+		System.out.println(idPath);
+		Long id = Long.valueOf(idPath);
+		List<String> list = this.foodtruckImp.getImages(id);
+		if(list.isEmpty()) {
+			return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
+		}
+		
+		System.out.println(list.size());
+		return new ResponseEntity<List<String>>(list,HttpStatus.OK);
+	}
+	
 }

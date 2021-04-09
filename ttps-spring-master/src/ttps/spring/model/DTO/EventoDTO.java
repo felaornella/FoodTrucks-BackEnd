@@ -45,6 +45,21 @@ public class EventoDTO implements Serializable {
 		this.forma_pago = e.getForma_pago();
 		this.setOrganizador(e.getOrganizador());
 	}
+	
+	/*-- prov --*/
+	public EventoDTO(Evento e, int n) {
+		this.id = e.getId();
+		this.nombre = e.getNombre();
+		this.direccion = e.getDireccion();
+		this.codigo_postal = e.getCodigo_postal();
+		this.provincia = e.getProvincia();
+		this.fecha_hora = e.getFecha_hora();
+		this.email = e.getEmail();
+		this.tel_contacto = e.getTel_contacto();
+		this.descripcion = e.getDescripcion();
+		this.tipo_evento = e.getTipo_evento();
+		this.forma_pago = e.getForma_pago();
+	}
 
 	public String toString() {
 		String ret="EVENTO\n";
