@@ -8,6 +8,7 @@ import ttps.spring.model.DTO.FoodTruckDTO;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Query;
@@ -81,4 +82,24 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 		}
 	}
 	
+	@Transactional
+	public List<FoodTruckDTO> topFoodtrucks(){
+		try {
+			Query consulta= this.getEntityManager().
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o order by puntaje desc");
+			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
+			System.out.print(String.valueOf(resultado.size()));
+			List<FoodTruckDTO> resultadoFinal = new ArrayList<FoodTruckDTO>();
+			for (FoodTruck f: resultado) {
+				//f.getImagenes().size();
+				System.out.print(f.toString());
+				resultadoFinal.add(new FoodTruckDTO(f));				
+			}
+			return resultadoFinal;
+		} catch (RuntimeException e) {
+			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName());
+			return null;
+		}
+	}
+
 }

@@ -100,6 +100,8 @@ public class ValoracionDTO implements Serializable {
 	public void setDiseno(int diseno) {
 		this.diseno = diseno;
 	}
-	
-	
+
+	public int getTotal() {
+		return this.calidad_precio + this.diseno + this.limpieza + this.sabor + this.simpatia;
+	}
 }

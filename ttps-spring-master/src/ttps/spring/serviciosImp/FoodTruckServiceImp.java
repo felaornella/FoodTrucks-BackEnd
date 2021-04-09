@@ -107,4 +107,8 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida){
 		return this.FoodTruckImp.busqueda(zona,nombre,comida);
 	}
+	
+	public List<FoodTruckDTO> topFoodtrucks(){
+		return this.FoodTruckImp.topFoodtrucks();
+	}
 }

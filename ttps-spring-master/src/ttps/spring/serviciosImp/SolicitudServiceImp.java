@@ -79,6 +79,9 @@ public class SolicitudServiceImp implements SolicitudService {
 	
 	public void agregarValoracionASolicitud(Long id, Valoracion v) {
 		Solicitud s= SolicitudImp.recuperarPorId(id);
+		FoodTruck f= ftService.recuperarFoodTruckPorId(s.getFoodtruck().getId());
+		f.sumarPuntaje(v.getTotal());
+		ftService.actualizar(f.getId(), new FoodTruckDTO(f));
 		s.setValoracion(v);
 		SolicitudImp.actualizar(s);
 	}

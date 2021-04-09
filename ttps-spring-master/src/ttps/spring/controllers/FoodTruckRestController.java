@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ttps.spring.model.*;
@@ -19,6 +20,9 @@ import ttps.spring.model.DTO.*;
 public class FoodTruckRestController {
 	@Autowired
 	FoodTruckService foodtruckImp;
+	
+	@Autowired
+	SolicitudService soliImp;
 	
 	@PostMapping()
 	public ResponseEntity<FoodTruckDTO> createFoodTruck(@RequestBody FoodTruckDTO ft){
@@ -96,6 +100,43 @@ public class FoodTruckRestController {
             return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
         }
     }
+	
+	
+	@GetMapping("/topFoodtrucks")
+	public ResponseEntity<List<FoodTruckDTO>>topFoodtrucks(){
+		List<FoodTruckDTO> ftRec= this.foodtruckImp.topFoodtrucks();
+		List<SolicitudDTO> sol= this.soliImp.recuperarTodos();
+		
+		
+		
+		List<FoodTruckDTO> finals = new ArrayList<FoodTruckDTO>();
+		
+		for (FoodTruckDTO f:ftRec) {
+			int cantidad=0;
+			for (SolicitudDTO s:sol) {
+				if (s.getFoodtruck().getId().equals(f.getId())) {
+					cantidad++;
+				}
+			}
+			
+			int puntaje = f.getPuntaje();
+			f.setPuntaje(puntaje/cantidad);
+			int i=0;
+			for (FoodTruckDTO f2:finals) {
+				if (f2.getPuntaje()>=f.getPuntaje()) {
+					i++;
+				}else {
+					break;
+				}
+			}
+			finals.add(i,f);
+		}
+		
+		if(ftRec.isEmpty()) {
+			return new ResponseEntity<List<FoodTruckDTO>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<FoodTruckDTO>>(finals,HttpStatus.OK);
+	}
 	
 	//NO FUNCIONA, NO SE PORQUE, PERO EN TEORIA RECIBE UN STRING EN BASE64 DE LA IMAGEN PARA GUARDARLO. DESPUES ANGULAR LO DECODIFICA Y LISTO---------------------------------------
 	@PostMapping("/pruebaImagen/{id}")

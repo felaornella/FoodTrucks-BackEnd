@@ -175,5 +175,9 @@ public class FoodTruck implements Serializable {
 	public void agregarImagen(String imagen) {
 		imagenes.add(imagen);
 	}
+	
+	public void sumarPuntaje(Integer puntos) {
+		this.puntaje = this.puntaje + puntos;
+	}
 
 }

@@ -108,5 +108,8 @@ public class Valoracion implements Serializable {
 		this.diseno = diseno;
 	}
 	
+	public int getTotal() {
+		return this.calidad_precio + this.diseno + this.limpieza + this.sabor + this.simpatia;
+	}
 	
 }
