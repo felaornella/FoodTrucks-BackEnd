@@ -149,4 +149,12 @@ public class Solicitud implements Serializable {
 	public void setAceptada() {
 		this.estado="Aceptada";
 	}
+	
+	public void setFinalizada() {
+		this.estado = "Finalizada";
+	}
+	
+	public void setCalificada() {
+		this.estado = "Calificada";
+	}
 }
