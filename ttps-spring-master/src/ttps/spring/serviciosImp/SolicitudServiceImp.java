@@ -82,5 +82,26 @@ public class SolicitudServiceImp implements SolicitudService {
 		s.setValoracion(v);
 		SolicitudImp.actualizar(s);
 	}
+	
+	public Boolean modificarEstadoSolicitud(Solicitud s, String st) {
+		try {
+			switch (st) {
+			case "Aceptada": s.setAceptada();	
+				break;
+			case "Rechazada": s.setRechazada();
+				break;
+			case "Finalizada": s.setFinalizada();
+				break;
+			default:
+					throw new RuntimeException("estado invalido");
+			}
+			this.SolicitudImp.actualizar(s);
+			return true;
+		}catch(Exception e) {
+        	System.out.println(st + "es un estado invalido");
+        	return false;
+			
+		}
+	}
 
 }

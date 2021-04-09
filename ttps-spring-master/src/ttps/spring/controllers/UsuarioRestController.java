@@ -289,4 +289,21 @@ public class UsuarioRestController {
 		}
 	}
 	
+	
+	@PutMapping("/modificarSolicitud/{id}")
+    public ResponseEntity<SolicitudDTO> modificarEstadoSolicitud(@PathVariable("id") String idSolicitud, @RequestBody Map<String,String> estado){ 
+		//, @RequestHeader("token")  String token
+        try {
+        	System.out.println(estado.get("estado"));
+        	Long id = Long.valueOf(idSolicitud);
+        	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
+
+        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
+        		return new ResponseEntity<SolicitudDTO>(HttpStatus.OK);
+        	}else
+            return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+        }catch (RuntimeException e) {
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+    }
 }

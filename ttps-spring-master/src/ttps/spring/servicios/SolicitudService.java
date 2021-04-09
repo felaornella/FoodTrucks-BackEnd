@@ -30,4 +30,6 @@ public interface SolicitudService {
 
 	public void agregarValoracionASolicitud(Long id, Valoracion valoracion);
 
+	public Boolean modificarEstadoSolicitud(Solicitud s, String estado);
+
 }
