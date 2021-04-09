@@ -83,6 +83,7 @@ public class SolicitudServiceImp implements SolicitudService {
 		f.sumarPuntaje(v.getTotal());
 		ftService.actualizar(f.getId(), new FoodTruckDTO(f));
 		s.setValoracion(v);
+		s.setCalificada();
 		SolicitudImp.actualizar(s);
 	}
 	

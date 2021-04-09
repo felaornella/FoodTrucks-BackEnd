@@ -282,7 +282,23 @@ public class UsuarioRestController {
 		return new ResponseEntity<List<FoodTruckDTO>>(list,HttpStatus.OK);
 	}
 	
-	
+
+	@PutMapping("/modificarSolicitud/{id}")
+    public ResponseEntity<SolicitudDTO> modificarEstadoSolicitud(@PathVariable("id") String idSolicitud, @RequestBody Map<String,String> estado){ 
+		//, @RequestHeader("token")  String token
+        try {
+        	System.out.println(estado.get("estado"));
+        	Long id = Long.valueOf(idSolicitud);
+        	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
+
+        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
+        		return new ResponseEntity<SolicitudDTO>(HttpStatus.OK);
+        	}else
+            return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+        }catch (RuntimeException e) {
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+    }
 	
 	//Metodo temporal para intentar solucionar el problema con los proxy (No soluciona, solo retorna una solicitud hasta donde llega a cargarla antes de romper para ver si al menos carga algo)
 	/*@GetMapping(path="/recuperarSolicitud/{id}")
@@ -320,20 +336,4 @@ public class UsuarioRestController {
 	
 	
 	
-	@PutMapping("/modificarSolicitud/{id}")
-    public ResponseEntity<SolicitudDTO> modificarEstadoSolicitud(@PathVariable("id") String idSolicitud, @RequestBody Map<String,String> estado){ 
-		//, @RequestHeader("token")  String token
-        try {
-        	System.out.println(estado.get("estado"));
-        	Long id = Long.valueOf(idSolicitud);
-        	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
-
-        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
-        		return new ResponseEntity<SolicitudDTO>(HttpStatus.OK);
-        	}else
-            return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
-        }catch (RuntimeException e) {
-			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
-		}
-    }
 }
