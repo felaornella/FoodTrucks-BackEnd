@@ -32,7 +32,8 @@ public interface FoodTruckService {
 	
 	public List<String> getImages (Long id);
 	
-
+	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida);
+	
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
 
 }

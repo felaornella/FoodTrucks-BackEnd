@@ -103,4 +103,8 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	public void borrar(FoodTruck FoodTruck) {
 		this.FoodTruckImp.borrar(FoodTruck);
 	}
+	
+	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida){
+		return this.FoodTruckImp.busqueda(zona,nombre,comida);
+	}
 }

@@ -10,4 +10,6 @@ public interface FoodTruckDAO extends GenericDAO<FoodTruck>{
 	List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
 	
 	List<String> getImages(Long id);
+	
+	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida);
 }

@@ -1,6 +1,9 @@
 package ttps.spring.controllers;
 
 import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import java.util.List;
@@ -25,6 +28,9 @@ public class UsuarioRestController {
 
 	@Autowired
 	ValoracionService valoracionImp;
+	
+	@Autowired
+	FoodTruckService foodtruckImp;
 	
 	@GetMapping()
 	public ResponseEntity<List<UsuarioDTO>>getAllUsers(){
@@ -248,6 +254,35 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@PostMapping("/valorarSolicitud/{id}")
+	public ResponseEntity<ValoracionDTO> newValoracion(@PathVariable("id") String idSolicitud, @RequestBody Valoracion valoracion){
+		Long id = Long.valueOf(idSolicitud);
+		try {
+			this.soliImp.agregarValoracionASolicitud(id,valoracion);
+			return new ResponseEntity<ValoracionDTO>(HttpStatus.OK);
+		}catch (RuntimeException e) {
+			System.out.println("Problemas al Persistir valoracion");
+			return new ResponseEntity<ValoracionDTO>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	@GetMapping("/buscar")
+	public ResponseEntity<List<FoodTruckDTO>> nuevaBusqueda(@RequestBody Map<String, String> parametros){
+		String zona = parametros.get("Zona");
+		String nombre = parametros.get("Nombre");
+		String comida = parametros.get("Comida");
+		
+		List<FoodTruckDTO> list = this.foodtruckImp.busqueda(zona,nombre,comida);
+		if(list.isEmpty()) {
+			return new ResponseEntity<List<FoodTruckDTO>>(HttpStatus.NO_CONTENT);
+		}
+		
+		System.out.println(list.size());
+		return new ResponseEntity<List<FoodTruckDTO>>(list,HttpStatus.OK);
+	}
+	
+	
 	
 	//Metodo temporal para intentar solucionar el problema con los proxy (No soluciona, solo retorna una solicitud hasta donde llega a cargarla antes de romper para ver si al menos carga algo)
 	/*@GetMapping(path="/recuperarSolicitud/{id}")
@@ -277,17 +312,12 @@ public class UsuarioRestController {
 	}*/
 	
 
-	@PostMapping("/valorarSolicitud/{id}")
-	public ResponseEntity<ValoracionDTO> newValoracion(@PathVariable("id") String idSolicitud, @RequestBody Valoracion valoracion){
-		Long id = Long.valueOf(idSolicitud);
-		try {
-			this.soliImp.agregarValoracionASolicitud(id,valoracion);
-			return new ResponseEntity<ValoracionDTO>(HttpStatus.OK);
-		}catch (RuntimeException e) {
-			System.out.println("Problemas al Persistir valoracion");
-			return new ResponseEntity<ValoracionDTO>(HttpStatus.NOT_FOUND);
-		}
-	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@PutMapping("/modificarSolicitud/{id}")

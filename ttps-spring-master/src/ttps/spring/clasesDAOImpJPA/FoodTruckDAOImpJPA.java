@@ -52,4 +52,33 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			return null;
 		}
 	}
+	
+	
+	@Transactional
+	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida){
+		try {
+			String anexoZona="descripcion LIKE '%" + zona + "%'";
+			
+			String anexoNombre="nombre LIKE '%" + nombre + "%'";
+			
+			String anexoComida="tipo_servicio LIKE '%" + comida + "%'";
+			
+			Query consulta= this.getEntityManager().
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where " + anexoZona + " AND " + anexoNombre + " AND " + anexoComida);
+			
+			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
+			System.out.print(String.valueOf(resultado.size()));
+			List<FoodTruckDTO> resultadoFinal = new ArrayList<FoodTruckDTO>();
+			for (FoodTruck f: resultado) {
+				//f.getImagenes().size();
+				System.out.print(f.toString());
+				resultadoFinal.add(new FoodTruckDTO(f));				
+			}
+			return resultadoFinal;
+		} catch (RuntimeException e) {
+			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName());
+			return null;
+		}
+	}
+	
 }
