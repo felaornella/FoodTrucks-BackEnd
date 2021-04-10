@@ -40,4 +40,20 @@ public class SolicitudDAOImpJPA extends GenericDAOImpJPA<Solicitud> implements S
 			return null;
 		}
 	}
+	
+	@Transactional
+	public List<SolicitudDTO> solicitudesDeFoodTrucker(Long id) {
+		try {
+			Query consulta= this.getEntityManager().createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where solicitado_id=" + id);
+			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
+			List<SolicitudDTO> resultadoFinal = new ArrayList<SolicitudDTO>();
+			for (Solicitud s: resultado) {
+				resultadoFinal.add(new SolicitudDTO(s));				
+			}
+			return resultadoFinal;
+		} catch (RuntimeException e) {
+			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con solicitado_id ingresado");
+			return null;
+		}
+	}
 }

@@ -73,8 +73,19 @@ public class SolicitudServiceImp implements SolicitudService {
 		this.SolicitudImp.actualizar(Solicitud);
 	}
 	
-	public List<SolicitudDTO> solicitudesDeOrganizador(Long id) {
-		return this.SolicitudImp.solicitudesDeOrganizador(id);
+	public List<SolicitudDTO> solicitudesDeUsuario(Long id, String tipo) {
+		System.out.println("Tipo recibido:	" + tipo);
+		List<SolicitudDTO> answer = null;
+		if (tipo.equals("Organizador")){
+			System.out.println("Entre a orga");	
+			answer= this.SolicitudImp.solicitudesDeOrganizador(id);			
+		}else {
+			if (tipo.equals("FoodTrucker")){
+				System.out.println("Entre a foodtruck");
+				answer= this.SolicitudImp.solicitudesDeFoodTrucker(id);			
+			}
+		}
+		return answer;
 	}
 	
 	public void agregarValoracionASolicitud(Long id, Valoracion v) {

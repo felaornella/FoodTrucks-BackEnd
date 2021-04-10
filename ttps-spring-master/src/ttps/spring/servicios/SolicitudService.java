@@ -26,7 +26,7 @@ public interface SolicitudService {
 
 	public void actualizar(Solicitud s);
 
-	public List<SolicitudDTO> solicitudesDeOrganizador(Long id);
+	public List<SolicitudDTO> solicitudesDeUsuario (Long id, String tipo);
 
 	public void agregarValoracionASolicitud(Long id, Valoracion valoracion);
 

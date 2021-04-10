@@ -181,7 +181,7 @@ public class UsuarioRestController {
 
 	/* ------------------- */
 	@GetMapping(path="/{id}/solicitudes")
-	public ResponseEntity<List<SolicitudDTO>> getSolicitudes(@PathVariable("id") String idUsuario){ // @RequestHeader("token") String token
+	public ResponseEntity<List<SolicitudDTO>> getSolicitudes(@PathVariable("id") String idUsuario, @RequestHeader("tipoUsuario") String tipo){
 		Long id = Long.valueOf(idUsuario);
 
 		try {
@@ -190,7 +190,7 @@ public class UsuarioRestController {
 				System.out.println("no existe usuario con id = "+ id);
 				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NOT_FOUND);
 			}
-			List<SolicitudDTO> solicitudes = this.soliImp.solicitudesDeOrganizador(id);
+			List<SolicitudDTO> solicitudes = this.soliImp.solicitudesDeUsuario(id,tipo);
 			if(solicitudes.isEmpty()) {
 				return new ResponseEntity<List<SolicitudDTO>>(HttpStatus.NO_CONTENT);
 			}
