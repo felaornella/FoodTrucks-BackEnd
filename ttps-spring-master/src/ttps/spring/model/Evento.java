@@ -70,6 +70,7 @@ public class Evento implements Serializable {
 		this.descripcion = e.getDescripcion();
 		this.tipo_evento = e.getTipo_evento();
 		this.forma_pago = e.getForma_pago();
+		this.geolocalizacion = e.getGeolocalizacion();
 		this.organizador= o;
 	}
 	
