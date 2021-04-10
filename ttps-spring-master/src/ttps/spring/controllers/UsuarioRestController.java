@@ -254,15 +254,15 @@ public class UsuarioRestController {
 		}
 	}
 	
-	@PostMapping("/valorarSolicitud/{id}")
-	public ResponseEntity<ValoracionDTO> newValoracion(@PathVariable("id") String idSolicitud, @RequestBody Valoracion valoracion){
+	@PutMapping("/valorarSolicitud/{id}")
+	public ResponseEntity<SolicitudDTO> newValoracion(@PathVariable("id") String idSolicitud, @RequestBody Valoracion valoracion){
 		Long id = Long.valueOf(idSolicitud);
 		try {
 			this.soliImp.agregarValoracionASolicitud(id,valoracion);
-			return new ResponseEntity<ValoracionDTO>(HttpStatus.OK);
+			return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id),HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir valoracion");
-			return new ResponseEntity<ValoracionDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -284,7 +284,7 @@ public class UsuarioRestController {
 	
 
 	@PutMapping("/modificarSolicitud/{id}")
-    public ResponseEntity<SolicitudDTO> modificarEstadoSolicitud(@PathVariable("id") String idSolicitud, @RequestBody Map<String,String> estado){ 
+    public ResponseEntity<SolicitudDTO> modificarEstadoSolicitud(@PathVariable("id") String idSolicitud, @RequestParam Map<String,String> estado){ 
 		//, @RequestHeader("token")  String token
         try {
         	System.out.println(estado.get("estado"));
@@ -292,7 +292,7 @@ public class UsuarioRestController {
         	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
 
         	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
-        		return new ResponseEntity<SolicitudDTO>(HttpStatus.OK);
+        		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
         	}else
             return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
         }catch (RuntimeException e) {
