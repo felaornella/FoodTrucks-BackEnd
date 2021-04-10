@@ -114,13 +114,15 @@ public class FoodTruckRestController {
 		for (FoodTruckDTO f:ftRec) {
 			int cantidad=0;
 			for (SolicitudDTO s:sol) {
-				if (s.getFoodtruck().getId().equals(f.getId())) {
+				if (s.getFoodtruck().getId().equals(f.getId()) && s.getEstado().equals("Calificada")) {
 					cantidad++;
 				}
 			}
 			
 			int puntaje = f.getPuntaje();
-			f.setPuntaje(puntaje/cantidad);
+			if (cantidad>0) {
+				f.setPuntaje(puntaje/cantidad);
+			}
 			int i=0;
 			for (FoodTruckDTO f2:finals) {
 				if (f2.getPuntaje()>=f.getPuntaje()) {
@@ -135,7 +137,7 @@ public class FoodTruckRestController {
 		if(ftRec.isEmpty()) {
 			return new ResponseEntity<List<FoodTruckDTO>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<FoodTruckDTO>>(finals,HttpStatus.OK);
+		return new ResponseEntity<List<FoodTruckDTO>>(finals.subList(0, 5),HttpStatus.OK);
 	}
 	
 	//NO FUNCIONA, NO SE PORQUE, PERO EN TEORIA RECIBE UN STRING EN BASE64 DE LA IMAGEN PARA GUARDARLO. DESPUES ANGULAR LO DECODIFICA Y LISTO---------------------------------------

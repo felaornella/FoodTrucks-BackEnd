@@ -268,7 +268,7 @@ public class UsuarioRestController {
 	
 	
 	@GetMapping("/buscar")
-	public ResponseEntity<List<FoodTruckDTO>> nuevaBusqueda(@RequestBody Map<String, String> parametros){
+	public ResponseEntity<List<FoodTruckDTO>> nuevaBusqueda(@RequestParam Map<String, String> parametros){
 		String zona = parametros.get("Zona");
 		String nombre = parametros.get("Nombre");
 		String comida = parametros.get("Comida");
