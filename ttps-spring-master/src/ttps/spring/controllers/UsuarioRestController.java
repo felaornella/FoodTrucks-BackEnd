@@ -12,6 +12,7 @@ import java.util.Map;
 import ttps.spring.model.*;
 import ttps.spring.clasesDAO.UsuarioDAO;
 import ttps.spring.servicios.*;
+import ttps.spring.serviciosImp.TokenServices;
 import ttps.spring.model.DTO.*;
 import ttps.spring.clasesDAOImpJPA.*;
 
@@ -19,6 +20,10 @@ import ttps.spring.clasesDAOImpJPA.*;
 @RestController
 @RequestMapping(path="/usuario", produces= MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioRestController {
+	
+	
+	@Autowired
+	TokenServices tokenServices;
 	
 	@Autowired
 	UsuarioService usuarioImp;
@@ -134,7 +139,8 @@ public class UsuarioRestController {
 			usu.setTipo_usuario(rol);
 			System.out.println("llega al controller: "+rol);
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("token", String.valueOf(usu.getId()) + "123456");
+			//headers.add("token", String.valueOf(usu.getId()) + "123456");
+			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
 			//headers.add("tipo_usuario",  rol);
 			
 			System.out.println(usu.toString());
