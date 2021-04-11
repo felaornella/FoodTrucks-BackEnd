@@ -3,6 +3,8 @@ package ttps.spring.filters;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import ttps.spring.serviciosImp.TokenServices;
 
 import javax.servlet.*;
@@ -13,6 +15,7 @@ import java.io.IOException;
 /**
  * Servlet Filter implementation class JWTFilter
  */
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @WebFilter(filterName = "jwt-auth-filter", urlPatterns = "*")
 public class JWTFilter implements Filter {
 	private FilterConfig filterConf;
@@ -52,6 +55,8 @@ public class JWTFilter implements Filter {
             HttpServletResponse res = (HttpServletResponse) response;
             res.setStatus(HttpStatus.FORBIDDEN.value());
             return;
+        }else{
+        	System.out.println("No fue valido");
         }
 
         chain.doFilter(request, response);

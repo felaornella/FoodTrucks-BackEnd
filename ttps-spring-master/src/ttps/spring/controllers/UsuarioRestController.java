@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +93,9 @@ public class UsuarioRestController {
 	public ResponseEntity<FoodTruckerDTO> createUserFoodTrucker(@RequestBody FoodTrucker usu){
 		try {
 			usuarioImp.persistir(usu);
-			return new ResponseEntity<FoodTruckerDTO>(new FoodTruckerDTO(usu),HttpStatus.OK);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
+			return new ResponseEntity<FoodTruckerDTO>(new FoodTruckerDTO(usu),headers,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Foodtrucker");
 			return new ResponseEntity<FoodTruckerDTO>(HttpStatus.NOT_FOUND);
@@ -104,7 +108,9 @@ public class UsuarioRestController {
 		System.out.println("Entre al metodo");
 		try {
 			usuarioImp.persistir(usu);
-			return new ResponseEntity<OrganizadorDTO>(new OrganizadorDTO(usu),HttpStatus.OK);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
+			return new ResponseEntity<OrganizadorDTO>(new OrganizadorDTO(usu),headers,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Organizador");
 			return new ResponseEntity<OrganizadorDTO>(HttpStatus.NOT_FOUND);
@@ -113,7 +119,7 @@ public class UsuarioRestController {
 	
 	
 	@PostMapping("/autenticacion")
-	public ResponseEntity<UsuarioDTO> autenticar(@RequestHeader Map<String,String> mapHeaders){
+	public ResponseEntity<Map<String,String>> autenticar(@RequestHeader Map<String,String> mapHeaders){
 		System.out.println("ENTRE");
 		String username=null;
 		String clave=null;
@@ -127,26 +133,25 @@ public class UsuarioRestController {
 			}
 		}
 		if((username==null) || (clave==null)) {
-			return new ResponseEntity<UsuarioDTO>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<Map<String,String>>(HttpStatus.FORBIDDEN);
 		}
 		UsuarioDTO usu= usuarioImp.autenticar(username,clave); 
 		
 		if(usu==null) {
 			System.out.println("no existe el usuario");
-			return new ResponseEntity<UsuarioDTO>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<Map<String,String>>(HttpStatus.FORBIDDEN);
 		}else {
 			String rol = usuarioImp.tipoUsuario(usu.getId());
 			usu.setTipo_usuario(rol);
 			System.out.println("llega al controller: "+rol);
-			HttpHeaders headers = new HttpHeaders();
-			//headers.add("token", String.valueOf(usu.getId()) + "123456");
-			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
-			//headers.add("tipo_usuario",  rol);
 			
-			System.out.println(usu.toString());
-			System.out.println(String.valueOf(headers));
+			Map<String,String> body = new HashMap<String,String>();
+			body.put("usuario_username",usu.getUsername());
+			body.put("usuario_id",String.valueOf(usu.getId()));
+			body.put("usuario_tipo_usuario",usu.getTipo_usuario());
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 100));
 			
-			return new ResponseEntity<UsuarioDTO>(usu,headers,HttpStatus.OK); 
+			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK); 
 		}
 	}
 	

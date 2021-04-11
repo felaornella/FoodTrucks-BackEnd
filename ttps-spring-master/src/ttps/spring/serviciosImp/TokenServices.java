@@ -3,6 +3,7 @@ package ttps.spring.serviciosImp;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.security.Key;
 import java.util.Calendar;
@@ -13,6 +14,7 @@ import java.util.Date;
  *
  * @author manuel
  */
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @Service
 public class TokenServices {
 
