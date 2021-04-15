@@ -90,30 +90,35 @@ public class UsuarioRestController {
 	
 
 	@PostMapping("/foodtrucker")
-	public ResponseEntity<FoodTruckerDTO> createUserFoodTrucker(@RequestBody FoodTrucker usu){
+	public ResponseEntity<Map<String,String>> createUserFoodTrucker(@RequestBody FoodTrucker usu){
 		try {
 			usuarioImp.persistir(usu);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
-			return new ResponseEntity<FoodTruckerDTO>(new FoodTruckerDTO(usu),headers,HttpStatus.OK);
+			Map<String,String> body = new HashMap<String,String>();
+			body.put("usuario_username",usu.getUsername());
+			body.put("usuario_id",String.valueOf(usu.getId()));
+			body.put("usuario_tipo_usuario","FoodTrucker");
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
+			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Foodtrucker");
-			return new ResponseEntity<FoodTruckerDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Map<String,String>>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 
 	@PostMapping("/organizador")
-	public ResponseEntity<OrganizadorDTO> createUserOrganizador(@RequestBody Organizador usu){
-		System.out.println("Entre al metodo");
+	public ResponseEntity<Map<String,String>> createUserOrganizador(@RequestBody Organizador usu){
 		try {
 			usuarioImp.persistir(usu);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("token", tokenServices.generateToken(usu.getUsername(), 100));
-			return new ResponseEntity<OrganizadorDTO>(new OrganizadorDTO(usu),headers,HttpStatus.OK);
+			Map<String,String> body = new HashMap<String,String>();
+			body.put("usuario_username",usu.getUsername());
+			body.put("usuario_id",String.valueOf(usu.getId()));
+			body.put("usuario_tipo_usuario","Organizador");
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
+			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Organizador");
-			return new ResponseEntity<OrganizadorDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Map<String,String>>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -149,7 +154,7 @@ public class UsuarioRestController {
 			body.put("usuario_username",usu.getUsername());
 			body.put("usuario_id",String.valueOf(usu.getId()));
 			body.put("usuario_tipo_usuario",usu.getTipo_usuario());
-			body.put("token", tokenServices.generateToken(usu.getUsername(), 100));
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
 			
 			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK); 
 		}
@@ -311,32 +316,8 @@ public class UsuarioRestController {
 		}
     }
 	
-	//Metodo temporal para intentar solucionar el problema con los proxy (No soluciona, solo retorna una solicitud hasta donde llega a cargarla antes de romper para ver si al menos carga algo)
-	/*@GetMapping(path="/recuperarSolicitud/{id}")
-	public ResponseEntity<Solicitud> getSolicitudEspecifica(@PathVariable("id") String idPath, @RequestHeader("token") String token){
-		Long id = Long.valueOf(idPath);
-		try {
-			String[] tokenPartes = new String[2];
-			tokenPartes[1]=token.substring(token.length()-6,token.length());
-			tokenPartes[0]=token.substring(0,token.length()-6);
-			
-			if (!tokenPartes[1].equals(String.valueOf(123456))) {
-				System.out.println(tokenPartes[1]);
-				return new ResponseEntity<Solicitud>(HttpStatus.UNAUTHORIZED);
-			}
-		}catch(Exception e) {
-			return new ResponseEntity<Solicitud>(HttpStatus.UNAUTHORIZED);
-		}
-		try {
-			Solicitud soli = soliImp.recuperarSolicitudPorId(id);
-			if(soli==null) {
-				return new ResponseEntity<Solicitud>(HttpStatus.NOT_FOUND);
-			}
-			return new ResponseEntity<Solicitud>(soli,HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<Solicitud>(HttpStatus.NOT_FOUND);
-		}
-	}*/
+	
+	
 	
 
 	

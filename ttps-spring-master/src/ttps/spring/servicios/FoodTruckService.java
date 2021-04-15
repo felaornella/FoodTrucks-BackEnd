@@ -1,6 +1,8 @@
 package ttps.spring.servicios;
 
-import java.util.List; 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,7 @@ public interface FoodTruckService {
 
 	public Boolean actualizar(Long id, FoodTruckDTO f);
 	
-	public Boolean agregarFoto(Long id, String f);
+	public Boolean agregarFoto(Long id, Map<String,Object> f);
 	
 	public void borrar (FoodTruck f);
 	
@@ -37,5 +39,7 @@ public interface FoodTruckService {
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id);
 	
 	public List<FoodTruckDTO> topFoodtrucks();
+
+	public List<String> topFoodtrucksPics(List<FoodTruckDTO> lista);
 
 }

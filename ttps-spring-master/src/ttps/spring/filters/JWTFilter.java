@@ -50,13 +50,13 @@ public class JWTFilter implements Filter {
         }
 
         String token = req.getHeader(HttpHeaders.AUTHORIZATION);
-
+        System.out.println("No fue excepcion. El token fue: " + token);
         if (token == null || !TokenServices.validateToken(token)) {
             HttpServletResponse res = (HttpServletResponse) response;
             res.setStatus(HttpStatus.FORBIDDEN.value());
             return;
         }else{
-        	System.out.println("No fue valido");
+        	System.out.println("Fue valido");
         }
 
         chain.doFilter(request, response);

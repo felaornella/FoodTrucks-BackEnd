@@ -1,7 +1,9 @@
 package ttps.spring.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -32,7 +34,7 @@ public class FoodTruck implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "imagenes_foodtrucks", joinColumns = @JoinColumn(name = "id_foodtruck"))
 	@Column(name = "file_name")
-	private Set<String> imagenes = new HashSet<String>();
+	private List<String> imagenes = new ArrayList<String>();
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
 	private FoodTrucker dueno;
@@ -40,6 +42,20 @@ public class FoodTruck implements Serializable {
 	public FoodTruck() {
 	}
 
+	public FoodTruck(String nombre, String tipo_servicio, String descripcion, String url, String instagram,
+			String whatsapp, String facebook, Integer puntaje, List<String> img) {
+		super();
+		this.nombre = nombre;
+		this.tipo_servicio = tipo_servicio;
+		this.descripcion = descripcion;
+		this.url = url;
+		this.instagram = instagram;
+		this.whatsapp = whatsapp;
+		this.facebook = facebook;
+		this.puntaje = puntaje;
+		this.imagenes = img;
+	}
+	
 	public FoodTruck(String nombre, String tipo_servicio, String descripcion, String url, String instagram,
 			String whatsapp, String facebook, Integer puntaje) {
 		super();
@@ -164,16 +180,16 @@ public class FoodTruck implements Serializable {
 		this.puntaje = puntaje;
 	}
 
-	public Set<String> getImagenes() {
+	public List<String> getImagenes() {
 		return imagenes;
 	}
 
-	public void setImagenes(Set<String> imagenes) {
+	public void setImagenes(List<String> imagenes) {
 		this.imagenes = imagenes;
 	}
 
-	public void agregarImagen(String imagen) {
-		imagenes.add(imagen);
+	public void agregarImagen(Object imagen) {
+		imagenes.add(imagen.toString());
 	}
 	
 	public void sumarPuntaje(Integer puntos) {

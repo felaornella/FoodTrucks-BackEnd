@@ -2,6 +2,7 @@ package ttps.spring.model.DTO;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class FoodTruckDTO implements Serializable {
 	private String facebook;
 	private Integer puntaje;
 	
-	private Set<String> imagenes = new HashSet<String>();
+	private List<String> imagenes;
 	
 	private FoodTruckerDTO dueno;
 	
@@ -171,12 +172,12 @@ public class FoodTruckDTO implements Serializable {
 	}
 
 
-	public Set<String> getImagenes() {
+	public List<String> getImagenes() {
 		return imagenes;
 	}
 
 
-	public void setImagenes(Set<String> imagenes) {
+	public void setImagenes(List<String> imagenes) {
 		this.imagenes = imagenes;
 	}
 

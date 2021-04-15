@@ -101,5 +101,4 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			return null;
 		}
 	}
-
 }

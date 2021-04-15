@@ -14,7 +14,6 @@ import java.util.Date;
  *
  * @author manuel
  */
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @Service
 public class TokenServices {
 

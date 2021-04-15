@@ -14,4 +14,5 @@ public interface FoodTruckDAO extends GenericDAO<FoodTruck>{
 	public List<FoodTruckDTO> busqueda(String zona, String nombre, String comida);
 	
 	public List<FoodTruckDTO> topFoodtrucks();
+	
 }

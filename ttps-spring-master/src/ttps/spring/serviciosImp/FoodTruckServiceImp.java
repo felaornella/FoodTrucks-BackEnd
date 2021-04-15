@@ -3,6 +3,7 @@ package ttps.spring.serviciosImp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -41,8 +42,12 @@ public class FoodTruckServiceImp implements FoodTruckService {
 		return this.FoodTruckImp.foodTrucksDeFtrucker(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<String> getImages(Long id){
-		return this.FoodTruckImp.getImages(id);
+		//return this.FoodTruckImp.getImages(id);
+		FoodTruck ft = this.FoodTruckImp.recuperarPorId(id);
+		ft.getImagenes().size();
+		return ft.getImagenes();
 	}
 	
 	public FoodTruckDTO recuperarPorId(Long id) {
@@ -60,7 +65,12 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	
 	public void persistir(FoodTruckDTO ft) {
 		FoodTrucker owner = foodtruckerImp.recuperarPorId(ft.getDueno().getId());
-		this.FoodTruckImp.persistir(new FoodTruck(ft,owner));
+		FoodTruck ft2= new FoodTruck(ft,owner);
+		for (String s: ft.getImagenes()) {
+			ft2.agregarImagen(s);
+		}
+		System.out.println("HABIA FOTOS2:  " + ft2.getImagenes().size());
+		this.FoodTruckImp.persistir(ft2);
 	}
 
 	
@@ -89,15 +99,16 @@ public class FoodTruckServiceImp implements FoodTruckService {
 		return this.FoodTruckImp.actualizar(foodtruck);
 	}
 
-	public Boolean agregarFoto(Long id,String pic) {
+	public Boolean agregarFoto(Long id,Map<String,Object> pic) {
 		System.out.println("ENTRE A ADD_PIC");
 		FoodTruck foodtruck = this.recuperarFoodTruckPorId(id);
 		if (foodtruck == null) {
 			System.out.println("Fue Null");
 			return false;
 		}
-		foodtruck.agregarImagen(pic);
-		return this.FoodTruckImp.actualizar(foodtruck);
+		foodtruck.agregarImagen(pic.get("imagen"));
+		//this.FoodTruckImp.agregarImagen(id,pic.get("imagen"));
+		return true;
 	}
 	
 	public void borrar(FoodTruck FoodTruck) {
@@ -110,5 +121,14 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	
 	public List<FoodTruckDTO> topFoodtrucks(){
 		return this.FoodTruckImp.topFoodtrucks();
+	}
+	
+	public List<String> topFoodtrucksPics(List<FoodTruckDTO> lista){
+		List<String> retorno = new ArrayList<String>();
+		for (FoodTruckDTO ft: lista) {
+			FoodTruck f = this.FoodTruckImp.recuperarPorId(ft.getId());
+			retorno.add(f.getImagenes().get(0));
+		}
+		return retorno;
 	}
 }

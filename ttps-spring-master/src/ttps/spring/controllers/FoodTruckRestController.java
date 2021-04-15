@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import ttps.spring.model.*;
 import ttps.spring.clasesDAO.FoodTruckDAO;
@@ -28,7 +30,7 @@ public class FoodTruckRestController {
 	public ResponseEntity<FoodTruckDTO> createFoodTruck(@RequestBody FoodTruckDTO ft){
 		try {
 			foodtruckImp.persistir(ft); 
-			 
+			 System.out.println("Recibi imagenes:  " + ft.getImagenes().size());
 			return new ResponseEntity<FoodTruckDTO>(ft,HttpStatus.OK);
 		}catch(RuntimeException e) {
 			System.out.println("Problemas al persistir");
@@ -37,6 +39,19 @@ public class FoodTruckRestController {
 		}
 	}
 	
+	
+//	@PostMapping()
+//	public ResponseEntity<FoodTruckDTO> createFoodTruck(@RequestBody FoodTruckDTO ft){
+//		try {
+//			foodtruckImp.persistir(ft); 
+//			 
+//			return new ResponseEntity<FoodTruckDTO>(ft,HttpStatus.OK);
+//		}catch(RuntimeException e) {
+//			System.out.println("Problemas al persistir");
+//			e.printStackTrace();
+//			return new ResponseEntity<FoodTruckDTO>(HttpStatus.NOT_FOUND);
+//		}
+//	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<FoodTruckDTO> deleteFoodTruck(@PathVariable("id") String idPath) {
@@ -104,6 +119,19 @@ public class FoodTruckRestController {
 	
 	@GetMapping("/topFoodtrucks")
 	public ResponseEntity<List<FoodTruckDTO>>topFoodtrucks(){
+		List<FoodTruckDTO> fts = this.calcularTop();
+		
+		if(fts.isEmpty()) {
+			return new ResponseEntity<List<FoodTruckDTO>>(HttpStatus.NO_CONTENT);
+		}
+		if (fts.size()>5) {
+			return new ResponseEntity<List<FoodTruckDTO>>(fts.subList(0, 5),HttpStatus.OK);
+		}else {
+			return new ResponseEntity<List<FoodTruckDTO>>(fts,HttpStatus.OK);
+		}
+	}
+	
+	private List<FoodTruckDTO> calcularTop(){
 		List<FoodTruckDTO> ftRec= this.foodtruckImp.topFoodtrucks();
 		List<SolicitudDTO> sol= this.soliImp.recuperarTodos();
 		
@@ -133,29 +161,24 @@ public class FoodTruckRestController {
 			}
 			finals.add(i,f);
 		}
-		
-		if(ftRec.isEmpty()) {
-			return new ResponseEntity<List<FoodTruckDTO>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<FoodTruckDTO>>(finals.subList(0, 5),HttpStatus.OK);
+		return finals;
 	}
-	
-	//NO FUNCIONA, NO SE PORQUE, PERO EN TEORIA RECIBE UN STRING EN BASE64 DE LA IMAGEN PARA GUARDARLO. DESPUES ANGULAR LO DECODIFICA Y LISTO---------------------------------------
-	@PostMapping("/pruebaImagen/{id}")
-    public ResponseEntity<FoodTruck> agregarImagenAFoodtruck(@PathVariable("id") String idPath,@RequestBody String pic){
-		Long id = Long.valueOf(idPath);
-		System.out.println("LLEGUE, RECIBI ESTO: \n" + pic);
-		try {
-			Boolean check= foodtruckImp.agregarFoto(id,pic);
-	        if(!check) {
-	            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
-	        }
-	        return new ResponseEntity<FoodTruck>(HttpStatus.OK);
-		}catch(Exception e) {
-            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
-        }
-    }
-	
+	//funciona pero no se usa
+//	@PostMapping("/pruebaImagen/{id}")
+//    public ResponseEntity<FoodTruck> agregarImagenAFoodtruck(@PathVariable("id") String idPath,@RequestBody Map<String,Object>pic){
+//		Long id = Long.valueOf(idPath);
+//		System.out.println("LLEGUE, RECIBI ESTO: \n");
+//		try {
+//			Boolean check= foodtruckImp.agregarFoto(id,pic);
+//	        if(!check) {
+//	            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
+//	        }
+//	        return new ResponseEntity<FoodTruck>(HttpStatus.OK);
+//		}catch(Exception e) {
+//            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//	
 	@GetMapping("{id}/imagenes")
 	public ResponseEntity<List<String>>getFoodTruckImagesById(@PathVariable("id") String idPath){
 		System.out.println(idPath);
@@ -165,8 +188,12 @@ public class FoodTruckRestController {
 			return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
 		}
 		
-		System.out.println(list.size());
+		System.out.println("devolvi: " + list.size());
 		return new ResponseEntity<List<String>>(list,HttpStatus.OK);
 	}
 	
+	@GetMapping("/topFoodtrucks/imagenes")
+	public ResponseEntity<List<String>>topFoodTrucksImagenes(){
+		return new ResponseEntity<List<String>>(this.foodtruckImp.topFoodtrucksPics(this.calcularTop()),HttpStatus.OK);
+	}
 }

@@ -11,5 +11,10 @@ public class ValoracionDAOImpJPA extends GenericDAOImpJPA<Valoracion> implements
 	public ValoracionDAOImpJPA() {
 		super(Valoracion.class);
 	}
-
+	
+	public String getImagen() {
+		
+		
+		return "";
+	}
 }
