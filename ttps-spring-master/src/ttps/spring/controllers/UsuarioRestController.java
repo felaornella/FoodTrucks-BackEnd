@@ -309,7 +309,29 @@ public class UsuarioRestController {
 
         	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
         		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
-        	}else
+        	}
+            return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+        }catch (RuntimeException e) {
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+    }
+	
+	@PutMapping("/cancelarSolicitud/{id}")
+    public ResponseEntity<SolicitudDTO> cancelarSolicitud(@PathVariable("id") String idSolicitud){ 
+        try {
+        	Long id = Long.valueOf(idSolicitud);
+        	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
+        	System.out.println("el estado de la solicitud fue "+ s.getEstado());
+        	if (s.getEstado().equals("Enviada")) {
+        		System.out.println("Entre");	
+	        	if (this.soliImp.modificarEstadoSolicitud(s, "Cancelada")) {
+	        		System.out.println("Entre2");
+	        		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
+	        	}
+        	}else {
+        		System.out.println("Else1");
+        		return new ResponseEntity<SolicitudDTO>(HttpStatus.BAD_REQUEST);
+        	}
             return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
         }catch (RuntimeException e) {
 			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);

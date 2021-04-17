@@ -8,5 +8,8 @@ public interface UsuarioDAO extends GenericDAO<Usuario>{
 	UsuarioDTO autenticar(String username, String clave);
 
 	String tipoUsuario(Long id);
+	
+	boolean verificarUsernameRepetido(Usuario usuario);
+	boolean verificarEmailRepetido(Usuario usuario);
 
 }

@@ -107,6 +107,9 @@ public class SolicitudServiceImp implements SolicitudService {
 				break;
 			case "Finalizada": s.setFinalizada();
 				break;
+			case "Cancelada": s.setCancelada();
+				System.out.println("canceladaaaaaaaaaa");	
+				break;
 			default:
 					throw new RuntimeException("estado invalido");
 			}
