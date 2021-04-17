@@ -7,6 +7,7 @@ import ttps.spring.model.FoodTruck;
 import ttps.spring.model.DTO.EventoDTO;
 import ttps.spring.model.DTO.FoodTruckDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class EventoDAOImpJPA extends GenericDAOImpJPA<Evento> implements EventoD
 	public List<EventoDTO> eventosDeOrganizador(Long id){
 		try {
 			Query consulta= this.getEntityManager().
-					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where organizador_id=" + id);
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 and organizador_id=" + id);
 			List<Evento> resultado = (List<Evento>) consulta.getResultList();
 			List<EventoDTO> resultadoFinal = new ArrayList<EventoDTO>();
 			for (Evento f: resultado) {
@@ -37,5 +38,26 @@ public class EventoDAOImpJPA extends GenericDAOImpJPA<Evento> implements EventoD
 			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con dueno_id ingresado");
 			return null;
 		}
+	}
+	
+	@Override
+	public Evento recuperarPorId(Serializable id) {
+		try {
+			Object obj = this.getEntityManager().
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 and id=" + id).getSingleResult();
+			return (Evento)obj;
+		} catch (RuntimeException e) {
+			System.out.println("No se encuentra "+ this.getPersistentClass().getSimpleName() +" con id ingresado");
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Evento> recuperarTodos() {
+		
+		Query consulta = this.getEntityManager().
+				createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0");
+		List<Evento> resultado = (List<Evento>) consulta.getResultList();
+		return resultado;
 	}
 }

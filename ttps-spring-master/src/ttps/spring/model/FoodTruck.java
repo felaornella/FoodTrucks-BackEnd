@@ -30,6 +30,7 @@ public class FoodTruck implements Serializable {
 	private String whatsapp;
 	private String facebook;
 	private Integer puntaje;
+	private int eliminado;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "imagenes_foodtrucks", joinColumns = @JoinColumn(name = "id_foodtruck"))
@@ -54,6 +55,7 @@ public class FoodTruck implements Serializable {
 		this.facebook = facebook;
 		this.puntaje = puntaje;
 		this.imagenes = img;
+		this.eliminado = 0;
 	}
 	
 	public FoodTruck(String nombre, String tipo_servicio, String descripcion, String url, String instagram,
@@ -67,6 +69,7 @@ public class FoodTruck implements Serializable {
 		this.whatsapp = whatsapp;
 		this.facebook = facebook;
 		this.puntaje = puntaje;
+		this.eliminado = 0;
 	}
 
 	public FoodTruck(FoodTruckDTO f, FoodTrucker unFoodTrucker) {
@@ -80,6 +83,7 @@ public class FoodTruck implements Serializable {
 		this.facebook = f.getFacebook();
 		this.puntaje = 0;
 		this.dueno = unFoodTrucker;
+		this.eliminado = f.getEliminado();
 	}
 
 	public String toString() {
@@ -91,6 +95,15 @@ public class FoodTruck implements Serializable {
 		
 		ret = ret + "\nDueno:" + this.dueno.toString() + "\n\n";
 		return ret;
+	}
+
+	
+	public int getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(int eliminado) {
+		this.eliminado = eliminado;
 	}
 
 	public Long getId() {

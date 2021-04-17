@@ -30,6 +30,7 @@ public class Evento implements Serializable {
 	private String descripcion;
 	private String tipo_evento;
 	private String forma_pago;
+	private int eliminado;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Organizador organizador;
@@ -40,8 +41,6 @@ public class Evento implements Serializable {
 	public Evento() {}
 	
 
-
-
 	public Evento(String nombre, String direccion, int codigo_postal, String provincia, String fecha_hora, String email,
 			String tel_contacto, String descripcion, String tipo_evento, String forma_pago) {
 		super();
@@ -49,13 +48,13 @@ public class Evento implements Serializable {
 		this.direccion = direccion;
 		this.codigo_postal = codigo_postal;
 		this.provincia = provincia;
-		
 		this.fecha_hora = fecha_hora;
 		this.email = email;
 		this.tel_contacto = tel_contacto;
 		this.descripcion = descripcion;
 		this.tipo_evento = tipo_evento;
 		this.forma_pago = forma_pago;
+		this.eliminado = 0;
 	}
 
 	public Evento(EventoDTO e, Organizador o) {
@@ -72,6 +71,7 @@ public class Evento implements Serializable {
 		this.forma_pago = e.getForma_pago();
 		this.geolocalizacion = e.getGeolocalizacion();
 		this.organizador= o;
+		this.eliminado = e.getEliminado();
 	}
 	
 	public String toString() {
@@ -87,11 +87,17 @@ public class Evento implements Serializable {
 		
 	}
 	
+	public int getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(int eliminado) {
+		this.eliminado = eliminado;
+	}
 
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;

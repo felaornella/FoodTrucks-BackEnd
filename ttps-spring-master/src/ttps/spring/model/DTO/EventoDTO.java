@@ -26,8 +26,9 @@ public class EventoDTO implements Serializable {
 	private String descripcion;
 	private String tipo_evento;
 	private String forma_pago;
-	
+	private int eliminado;
 	private OrganizadorDTO organizador;
+	
 	
 	public EventoDTO() {}
 
@@ -44,6 +45,7 @@ public class EventoDTO implements Serializable {
 		this.tipo_evento = e.getTipo_evento();
 		this.forma_pago = e.getForma_pago();
 		this.setOrganizador(e.getOrganizador());
+		this.eliminado = e.getEliminado();
 	}
 	
 	/*-- prov --*/
@@ -59,6 +61,7 @@ public class EventoDTO implements Serializable {
 		this.descripcion = e.getDescripcion();
 		this.tipo_evento = e.getTipo_evento();
 		this.forma_pago = e.getForma_pago();
+		this.eliminado = e.getEliminado();
 	}
 
 	public String toString() {
@@ -72,6 +75,14 @@ public class EventoDTO implements Serializable {
 		
 	}
 	
+
+	public int getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(int eliminado) {
+		this.eliminado = eliminado;
+	}
 
 	public Long getId() {
 		return id;

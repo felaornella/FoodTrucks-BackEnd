@@ -5,6 +5,7 @@ import ttps.spring.model.FoodTruck;
 import ttps.spring.model.FoodTrucker;
 import ttps.spring.model.DTO.FoodTruckDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +28,7 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 	public List<FoodTruckDTO> foodTrucksDeFtrucker(Long id){
 		try {
 			Query consulta= this.getEntityManager().
-					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where dueno_id=" + id);
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 and dueno_id=" + id);
 			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
 			List<FoodTruckDTO> resultadoFinal = new ArrayList<FoodTruckDTO>();
 			for (FoodTruck f: resultado) {
@@ -65,7 +66,7 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			String anexoComida="tipo_servicio LIKE '%" + comida + "%'";
 			
 			Query consulta= this.getEntityManager().
-					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where " + anexoZona + " AND " + anexoNombre + " AND " + anexoComida);
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 AND " + anexoZona + " AND " + anexoNombre + " AND " + anexoComida);
 			
 			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
 			System.out.print(String.valueOf(resultado.size()));
@@ -86,7 +87,7 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 	public List<FoodTruckDTO> topFoodtrucks(){
 		try {
 			Query consulta= this.getEntityManager().
-					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o order by puntaje desc");
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 order by puntaje desc");
 			List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
 			System.out.print(String.valueOf(resultado.size()));
 			List<FoodTruckDTO> resultadoFinal = new ArrayList<FoodTruckDTO>();
@@ -100,5 +101,26 @@ public class FoodTruckDAOImpJPA extends GenericDAOImpJPA<FoodTruck> implements F
 			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName());
 			return null;
 		}
+	}
+	
+	@Override
+	public FoodTruck recuperarPorId(Serializable id) {
+		try {
+			Object obj = this.getEntityManager().
+					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0 and id=" + id).getSingleResult();
+			return (FoodTruck)obj;
+		} catch (RuntimeException e) {
+			System.out.println("No se encuentra "+ this.getPersistentClass().getSimpleName() +" con id ingresado");
+			return null;
+		}
+	}
+
+	@Override
+	public List<FoodTruck> recuperarTodos() {
+	
+		Query consulta = this.getEntityManager().
+				createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName() + " o where eliminado=0");
+		List<FoodTruck> resultado = (List<FoodTruck>) consulta.getResultList();
+		return resultado;
 	}
 }

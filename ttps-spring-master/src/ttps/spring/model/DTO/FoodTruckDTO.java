@@ -26,7 +26,7 @@ public class FoodTruckDTO implements Serializable {
 	private String whatsapp;
 	private String facebook;
 	private Integer puntaje;
-	
+	private int eliminado;
 	private List<String> imagenes;
 	
 	private FoodTruckerDTO dueno;
@@ -45,6 +45,7 @@ public class FoodTruckDTO implements Serializable {
 		this.facebook = f.getFacebook();
 		this.puntaje = f.getPuntaje();
 		this.imagenes= f.getImagenes();
+		this.eliminado = f.getEliminado();
 		this.dueno= new FoodTruckerDTO(f.getDueno(), 1);
 	}
 	
@@ -60,6 +61,7 @@ public class FoodTruckDTO implements Serializable {
 		this.facebook = f.getFacebook();
 		this.puntaje = f.getPuntaje();
 		this.imagenes= f.getImagenes();
+		this.eliminado = f.getEliminado();
 	}
 
 	public String toString() {
@@ -70,7 +72,14 @@ public class FoodTruckDTO implements Serializable {
 		ret = ret + "\nPuntaje: " + String.valueOf(this.puntaje);
 		return ret;
 	}
+	
+	public int getEliminado() {
+		return eliminado;
+	}
 
+	public void setEliminado(int eliminado) {
+		this.eliminado = eliminado;
+	}
 
 	public Long getId() {
 		return id;

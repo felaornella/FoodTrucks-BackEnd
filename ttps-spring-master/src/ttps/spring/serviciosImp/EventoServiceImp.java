@@ -68,11 +68,12 @@ public class EventoServiceImp implements EventoService {
 		evento.setDescripcion(e.getDescripcion());
 		evento.setTipo_evento(e.getTipo_evento());
 		evento.setForma_pago(e.getForma_pago());
+		evento.setEliminado(e.getEliminado());
         System.out.println("Termine las asignaciones");
-        System.out.println("Owner: " + e.getOrganizador().toString());
-        System.out.println("El ID del dueño es : " + e.getOrganizador().getId());
+//        System.out.println("Owner: " + e.getOrganizador().toString());
+//        System.out.println("El ID del dueño es : " + e.getOrganizador().getId());
         Organizador orga = organizadorImp.recuperarPorId(e.getOrganizador().getId());
-        System.out.println("El dueño es: " + orga.toString());
+//        System.out.println("El dueño es: " + orga.toString());
         evento.setOrganizador(orga);
 		return this.eventoImp.actualizar(evento);
 		

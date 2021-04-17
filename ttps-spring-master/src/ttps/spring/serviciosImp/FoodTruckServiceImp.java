@@ -90,9 +90,10 @@ public class FoodTruckServiceImp implements FoodTruckService {
         foodtruck.setURL(ftruck.getURL());
         foodtruck.setWhatsapp(ftruck.getWhatsapp());
         foodtruck.setTipo_servicio(ftruck.getTipo_servicio());	
+        foodtruck.setEliminado(ftruck.getEliminado());
         System.out.println("Termine las asignaciones");
-        System.out.println("Owner: " + ftruck.getDueno().toString());
-        System.out.println("El ID del dueño es : " + ftruck.getDueno().getId());
+//        System.out.println("Owner: " + ftruck.getDueno().toString());
+//        System.out.println("El ID del dueño es : " + ftruck.getDueno().getId());
         FoodTrucker owner = foodtruckerImp.recuperarPorId(ftruck.getDueno().getId());
         System.out.println("El dueño es: " + owner.toString());
         foodtruck.setDueno(owner);

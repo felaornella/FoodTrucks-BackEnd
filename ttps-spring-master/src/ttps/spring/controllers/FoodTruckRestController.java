@@ -91,21 +91,23 @@ public class FoodTruckRestController {
 	}
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<FoodTruck> updateFoodTruck(@PathVariable("id") String idPath,@RequestBody FoodTruckDTO ftruck, @RequestHeader("token")  String token){
-		Long id = Long.valueOf(idPath);
+    public ResponseEntity<FoodTruck> updateFoodTruck(@PathVariable("id") String idPath,@RequestBody FoodTruckDTO ftruck){
+		
+//		try {
+////			, @RequestHeader("token")  String token
+//            String[] tokenpartes = new String[2];
+//            tokenpartes[1] = token.substring(token.length()-6, token.length());
+//            tokenpartes[0] = token.substring(0, token.length()-6);
+//
+//            if (!tokenpartes[1].equals(String.valueOf(123456))) {
+//				System.out.println(tokenpartes[1]);
+//				return new ResponseEntity<FoodTruck>(HttpStatus.UNAUTHORIZED);
+//			}
+//        }catch(Exception e) {
+//            return new ResponseEntity<FoodTruck>(HttpStatus.UNAUTHORIZED);
+//        }
 		try {
-            String[] tokenpartes = new String[2];
-            tokenpartes[1] = token.substring(token.length()-6, token.length());
-            tokenpartes[0] = token.substring(0, token.length()-6);
-
-            if (!tokenpartes[1].equals(String.valueOf(123456))) {
-				System.out.println(tokenpartes[1]);
-				return new ResponseEntity<FoodTruck>(HttpStatus.UNAUTHORIZED);
-			}
-        }catch(Exception e) {
-            return new ResponseEntity<FoodTruck>(HttpStatus.UNAUTHORIZED);
-        }
-		try {
+			Long id = Long.valueOf(idPath);
 			Boolean check= foodtruckImp.actualizar(id,ftruck);
 	        if(!check) {
 	            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);

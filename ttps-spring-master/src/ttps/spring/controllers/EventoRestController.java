@@ -67,40 +67,32 @@ public class EventoRestController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<List<EventoDTO>>getEventosFromOrganizadorById(@PathVariable("id") String idPath){
-		System.out.println(idPath);
+		System.out.println("id recibido: "+idPath);
 		Long id = Long.valueOf(idPath);
 		List<EventoDTO> list = this.eventoService.eventosDeOrganizador(id);
 		if(list.isEmpty()) {
 			return new ResponseEntity<List<EventoDTO>>(HttpStatus.NO_CONTENT);
 		}
 		
-		System.out.println(list.size());
+		System.out.println("cantidad retornada: "+list.size());
 		return new ResponseEntity<List<EventoDTO>>(list,HttpStatus.OK);
 	}
 	
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<Evento> updateEvento(@PathVariable("id") String idPath,@RequestBody EventoDTO ev, @RequestHeader("token")  String token){
-		Long id = Long.valueOf(idPath);
+    public ResponseEntity<Evento> updateEvento(@PathVariable("id") String idPath,@RequestBody EventoDTO ev){
+		System.out.println("entra a la api ");
 		try {
-            String[] tokenpartes = new String[2];
-            tokenpartes[1] = token.substring(token.length()-6, token.length());
-            tokenpartes[0] = token.substring(0, token.length()-6);
-
-            if (!tokenpartes[1].equals(String.valueOf(123456))) {
-				System.out.println(tokenpartes[1]);
-				return new ResponseEntity<Evento>(HttpStatus.UNAUTHORIZED);
-			}
-        }catch(Exception e) {
-            return new ResponseEntity<Evento>(HttpStatus.UNAUTHORIZED);
-        }
-		try {
+			System.out.println("entra a la api ");
+			Long id = Long.valueOf(idPath);
+			System.out.println("estado de evento a modificar: "+ ev.getEliminado());
 			Boolean check= eventoService.actualizar(id,ev);
 	        if(!check) {
 	            return new ResponseEntity<Evento>(HttpStatus.NOT_FOUND);
 	        }
 	        return new ResponseEntity<Evento>(HttpStatus.OK);
 		}catch(Exception e) {
+			System.out.println("no entra a actualizar ");
             return new ResponseEntity<Evento>(HttpStatus.NOT_FOUND);
         }
     }
