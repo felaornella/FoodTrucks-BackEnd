@@ -157,4 +157,8 @@ public class Solicitud implements Serializable {
 	public void setCalificada() {
 		this.estado = "Calificada";
 	}
+	
+	public void setCancelada(){
+		this.estado = "Cancelada";
+	}
 }

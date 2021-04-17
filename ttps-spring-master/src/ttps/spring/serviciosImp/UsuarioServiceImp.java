@@ -41,7 +41,11 @@ public class UsuarioServiceImp implements UsuarioService {
 	}
 	
 	public void persistir(Usuario usuario) {
-		this.usuarioImp.persistir(usuario);
+		if(!buscarDataRepetida(usuario)) {
+			this.usuarioImp.persistir(usuario);
+		}else {
+			throw new RuntimeException();
+		}
 	}
 
 	public void actualizar(Usuario usuario) {
@@ -56,4 +60,7 @@ public class UsuarioServiceImp implements UsuarioService {
 		return this.usuarioImp.tipoUsuario(id);
 	}
 	
+	private boolean buscarDataRepetida(Usuario usuario) {
+		return this.usuarioImp.verificarUsernameRepetido(usuario) || this.usuarioImp.verificarEmailRepetido(usuario);
+	}
 }
