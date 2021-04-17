@@ -21,7 +21,7 @@ public interface UsuarioService {
 	
 	public void persistir(Usuario usuario);
 
-	public void actualizar(Usuario usuario);
+	public void actualizar(Usuario usuario, String usernameOriginal, String emailOriginal);
 
 	public UsuarioDTO autenticar(String username, String clave);
 

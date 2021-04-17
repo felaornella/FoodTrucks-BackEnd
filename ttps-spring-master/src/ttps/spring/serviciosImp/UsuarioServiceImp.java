@@ -41,15 +41,19 @@ public class UsuarioServiceImp implements UsuarioService {
 	}
 	
 	public void persistir(Usuario usuario) {
-		if(!buscarDataRepetida(usuario)) {
+		if(!buscarDataRepetida(usuario,null,null)) {
 			this.usuarioImp.persistir(usuario);
 		}else {
 			throw new RuntimeException();
 		}
 	}
 
-	public void actualizar(Usuario usuario) {
-		this.usuarioImp.actualizar(usuario);
+	public void actualizar(Usuario usuario, String usernameOriginal, String emailOriginal) {
+		if(!buscarDataRepetida(usuario, usernameOriginal, emailOriginal)) {			
+			this.usuarioImp.actualizar(usuario);
+		}else {
+			throw new RuntimeException();
+		}
 	}
 
 	public UsuarioDTO autenticar(String username, String clave) {
@@ -60,7 +64,22 @@ public class UsuarioServiceImp implements UsuarioService {
 		return this.usuarioImp.tipoUsuario(id);
 	}
 	
-	private boolean buscarDataRepetida(Usuario usuario) {
-		return this.usuarioImp.verificarUsernameRepetido(usuario) || this.usuarioImp.verificarEmailRepetido(usuario);
+	private boolean buscarDataRepetida(Usuario usuario, String usernameOriginal, String emailOriginal) {
+		String username = this.usuarioImp.verificarUsernameRepetido(usuario);
+		String email = this.usuarioImp.verificarEmailRepetido(usuario);
+		boolean validacionUsername;
+		boolean validacionEmail;
+		if (usernameOriginal != null && emailOriginal != null) {
+			System.out.println("Input: " + usuario.getUsername() + " - Metodo: " + username + " Condindicion: " + ((username!="") && (!usernameOriginal.equals(username))));
+			System.out.println("Input: " + usuario.getEmail() + " - Metodo: " + email + " Condindicion: " + ((email!="") && (!emailOriginal.equals(email))));
+			validacionUsername = ((username!="") && (!usernameOriginal.equals(username)));
+			validacionEmail = ((email!="") && (!emailOriginal.equals(email)));
+		}else {
+			System.out.println("Input: " + usuario.getUsername() + " - Metodo: " + username + " Condindicion: " + ((username!="")));
+			System.out.println("Input: " + usuario.getEmail() + " - Metodo: " + email + " Condindicion: " + ((email!="")));
+			validacionUsername = ((username!=""));
+			validacionEmail = ((email!=""));
+		}
+		return validacionUsername || validacionEmail;
 	}
 }

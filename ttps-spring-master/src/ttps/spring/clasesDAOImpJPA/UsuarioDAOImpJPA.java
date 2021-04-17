@@ -39,21 +39,21 @@ public class UsuarioDAOImpJPA extends GenericDAOImpJPA<Usuario> implements Usuar
 		}
 	}
 	
-	public boolean verificarUsernameRepetido(Usuario usuario) {
+	public String verificarUsernameRepetido(Usuario usuario) {
 		try {
 			Object obj = this.getEntityManager().
 					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName()
 							+ " o WHERE o.username='" + usuario.getUsername()+"'").getSingleResult();
 			UsuarioDTO user = new UsuarioDTO((Usuario)obj);	
 			System.out.println("username repetida");
-			return true;
+			return usuario.getUsername();
 		} catch (RuntimeException e) {
 			System.out.println("Informacion unica");
-			return false;
+			return "";
 		}
 	}
 	
-	public boolean verificarEmailRepetido(Usuario usuario) {
+	public String verificarEmailRepetido(Usuario usuario) {
 		try {
 			Object obj = this.getEntityManager().
 					createQuery("SELECT o FROM " + this.getPersistentClass().getSimpleName()
@@ -61,10 +61,10 @@ public class UsuarioDAOImpJPA extends GenericDAOImpJPA<Usuario> implements Usuar
 			UsuarioDTO user = new UsuarioDTO((Usuario)obj);
 			
 			System.out.println("email repetida");
-			return true;
+			return usuario.getEmail();
 		} catch (RuntimeException e) {
 			System.out.println("Informacion unica");
-			return false;
+			return "";
 		}
 	}
 

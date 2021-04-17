@@ -180,16 +180,22 @@ public class UsuarioRestController {
 	        if(usuario==null) {
 	            return new ResponseEntity<UsuarioDTO>(HttpStatus.NOT_FOUND);
 	        }
+	        String usernameOriginal = usuario.getUsername();
+	        String emailOriginal = usuario.getEmail();
 	        usuario.setApellido(user.getApellido());
 	        usuario.setEmail(user.getEmail());
 	        usuario.setNombre(user.getNombre());
 	        usuario.setPassword(user.getPassword());
 	        usuario.setUsername(user.getUsername());
 	
-	        usuarioImp.actualizar(usuario);
+	        usuarioImp.actualizar(usuario,usernameOriginal,emailOriginal);
 	        return new ResponseEntity<UsuarioDTO>(HttpStatus.OK);
        	
-        }catch(Exception e) {
+        }
+        catch(RuntimeException e2) {
+        	return new ResponseEntity<UsuarioDTO>(HttpStatus.BAD_REQUEST);
+        }
+        catch(Exception e) {
             return new ResponseEntity<UsuarioDTO>(HttpStatus.NOT_FOUND);
         }
     }
@@ -306,9 +312,14 @@ public class UsuarioRestController {
         	System.out.println(estado.get("estado"));
         	Long id = Long.valueOf(idSolicitud);
         	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
-
-        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
-        		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
+        	boolean condEnviada= (s.getEstado().equals("Enviada") && (estado.get("estado").equals("Aceptada") || (estado.get("estado").equals("Rechazada"))));
+        	boolean condFinalizada= (s.getEstado().equals("Finalizada") && estado.get("estado").equals("Aceptada"));
+        	if (condEnviada || condFinalizada) {
+	        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
+	        		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
+	        	}
+        	}else {
+        		return new ResponseEntity<SolicitudDTO>(HttpStatus.BAD_REQUEST);
         	}
             return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
         }catch (RuntimeException e) {

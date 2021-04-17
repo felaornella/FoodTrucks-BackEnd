@@ -9,7 +9,7 @@ public interface UsuarioDAO extends GenericDAO<Usuario>{
 
 	String tipoUsuario(Long id);
 	
-	boolean verificarUsernameRepetido(Usuario usuario);
-	boolean verificarEmailRepetido(Usuario usuario);
+	String verificarUsernameRepetido(Usuario usuario);
+	String verificarEmailRepetido(Usuario usuario);
 
 }
