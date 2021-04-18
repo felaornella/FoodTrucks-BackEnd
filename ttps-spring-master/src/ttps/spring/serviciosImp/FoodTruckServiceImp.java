@@ -91,6 +91,7 @@ public class FoodTruckServiceImp implements FoodTruckService {
         foodtruck.setWhatsapp(ftruck.getWhatsapp());
         foodtruck.setTipo_servicio(ftruck.getTipo_servicio());	
         foodtruck.setEliminado(ftruck.getEliminado());
+        foodtruck.setImagenes(ftruck.getImagenes());
         System.out.println("Termine las asignaciones");
 //        System.out.println("Owner: " + ftruck.getDueno().toString());
 //        System.out.println("El ID del dueño es : " + ftruck.getDueno().getId());

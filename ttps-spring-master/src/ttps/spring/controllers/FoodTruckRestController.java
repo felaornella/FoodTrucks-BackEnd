@@ -108,6 +108,7 @@ public class FoodTruckRestController {
 //        }
 		try {
 			Long id = Long.valueOf(idPath);
+			System.out.println("Imagenes q llegaron" + ftruck.getImagenes().size());
 			Boolean check= foodtruckImp.actualizar(id,ftruck);
 	        if(!check) {
 	            return new ResponseEntity<FoodTruck>(HttpStatus.NOT_FOUND);
