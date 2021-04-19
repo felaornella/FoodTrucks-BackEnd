@@ -46,6 +46,7 @@ public class EventoDTO implements Serializable {
 		this.forma_pago = e.getForma_pago();
 		this.setOrganizador(e.getOrganizador());
 		this.eliminado = e.getEliminado();
+		this.geolocalizacion = e.getGeolocalizacion();
 	}
 	
 	/*-- prov --*/
