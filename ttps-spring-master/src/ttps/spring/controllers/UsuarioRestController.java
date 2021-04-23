@@ -313,7 +313,7 @@ public class UsuarioRestController {
         	Long id = Long.valueOf(idSolicitud);
         	Solicitud s = this.soliImp.recuperarSolicitudPorId(id);
         	boolean condEnviada= (s.getEstado().equals("Enviada") && (estado.get("estado").equals("Aceptada") || (estado.get("estado").equals("Rechazada"))));
-        	boolean condFinalizada= (s.getEstado().equals("Finalizada") && estado.get("estado").equals("Aceptada"));
+        	boolean condFinalizada= (s.getEstado().equals("Aceptada") && estado.get("estado").equals("Finalizada"));
         	if (condEnviada || condFinalizada) {
 	        	if (this.soliImp.modificarEstadoSolicitud(s, estado.get("estado"))) {
 	        		return new ResponseEntity<SolicitudDTO>(this.soliImp.recuperarPorId(id), HttpStatus.OK);
