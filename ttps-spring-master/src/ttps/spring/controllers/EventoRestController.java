@@ -75,6 +75,9 @@ public class EventoRestController {
 		}
 		
 		System.out.println("cantidad retornada: "+list.size());
+		for (EventoDTO e: list) {
+			System.out.println(e.getGeolocalizacion());
+		}
 		return new ResponseEntity<List<EventoDTO>>(list,HttpStatus.OK);
 	}
 	
