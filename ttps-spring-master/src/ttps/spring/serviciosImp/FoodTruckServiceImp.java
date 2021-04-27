@@ -17,6 +17,7 @@ import ttps.spring.model.*;
 import ttps.spring.model.DTO.*;
 import ttps.spring.servicios.FoodTruckService;
 import ttps.spring.servicios.FoodTruckerService;
+import ttps.spring.servicios.SolicitudService;
 import ttps.spring.servicios.FoodTruckService;
 
 @Service
@@ -28,6 +29,9 @@ public class FoodTruckServiceImp implements FoodTruckService {
 
 	@Autowired
 	FoodTruckerService foodtruckerImp;
+	
+	@Autowired
+	SolicitudService soliImp;
 	
 	public List<FoodTruckDTO> recuperarTodos(){
         List<FoodTruck> fts = FoodTruckImp.recuperarTodos();
@@ -92,6 +96,9 @@ public class FoodTruckServiceImp implements FoodTruckService {
         foodtruck.setTipo_servicio(ftruck.getTipo_servicio());	
         foodtruck.setEliminado(ftruck.getEliminado());
         foodtruck.setImagenes(ftruck.getImagenes());
+        if (ftruck.getEliminado()==1) {
+        	this.soliImp.cerrarFt(foodtruck);
+        }
         System.out.println("Termine las asignaciones");
 //        System.out.println("Owner: " + ftruck.getDueno().toString());
 //        System.out.println("El ID del dueño es : " + ftruck.getDueno().getId());
@@ -114,6 +121,8 @@ public class FoodTruckServiceImp implements FoodTruckService {
 	}
 	
 	public void borrar(FoodTruck FoodTruck) {
+		//Eliminar solicitudes pendientes y finalizar (sin permitir calificar) las activas.
+		this.soliImp.cerrarFt(FoodTruck);
 		this.FoodTruckImp.borrar(FoodTruck);
 	}
 	

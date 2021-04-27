@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ttps.spring.clasesDAOImpJPA.UsuarioDAOImpJPA;
+import ttps.spring.model.FoodTruck;
 import ttps.spring.model.Solicitud;
 import ttps.spring.model.Usuario;
 import ttps.spring.model.Valoracion;
@@ -31,5 +32,7 @@ public interface SolicitudService {
 	public void agregarValoracionASolicitud(Long id, Valoracion valoracion);
 
 	public Boolean modificarEstadoSolicitud(Solicitud s, String estado);
+
+	public void cerrarFt(FoodTruck foodTruck);
 
 }

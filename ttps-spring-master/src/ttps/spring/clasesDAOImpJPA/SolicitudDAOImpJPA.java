@@ -56,4 +56,16 @@ public class SolicitudDAOImpJPA extends GenericDAOImpJPA<Solicitud> implements S
 			return null;
 		}
 	}
+	
+	@Transactional
+	public List<Solicitud> recuperarPorFt(FoodTruck ft) {
+		try {
+			Query consulta= this.getEntityManager().createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where foodtruck=" + ft.getId());
+			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
+			return resultado;
+		} catch (RuntimeException e) {
+			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con solicitado_id ingresado");
+			return null;
+		}
+	}
 }

@@ -121,4 +121,17 @@ public class SolicitudServiceImp implements SolicitudService {
 		}
 	}
 
+	public void cerrarFt(FoodTruck ft){
+		List<Solicitud> solis=this.SolicitudImp.recuperarPorFt(ft);
+		System.out.println("---------------------------------------------------");
+		System.out.println("				la cantidad para eliminar es " + solis.size());
+		for (Solicitud s: solis) {
+			if (s.getEstado().equals("Enviada") || (s.getEstado().equals("Aceptada") || (s.getEstado().equals("Finalizada")))) {
+				System.out.println("Rechaze");
+				s.setRechazada();
+			}
+		}
+		System.out.println("---------------------------------------------------");
+		
+	}
 }
