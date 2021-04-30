@@ -97,7 +97,7 @@ public class UsuarioRestController {
 			body.put("usuario_username",usu.getUsername());
 			body.put("usuario_id",String.valueOf(usu.getId()));
 			body.put("usuario_tipo_usuario","FoodTrucker");
-			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 3600));
 			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Foodtrucker");
@@ -114,7 +114,7 @@ public class UsuarioRestController {
 			body.put("usuario_username",usu.getUsername());
 			body.put("usuario_id",String.valueOf(usu.getId()));
 			body.put("usuario_tipo_usuario","Organizador");
-			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 3600));
 			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK);
 		}catch (RuntimeException e) {
 			System.out.println("Problemas al Persistir Organizador");
@@ -154,7 +154,7 @@ public class UsuarioRestController {
 			body.put("usuario_username",usu.getUsername());
 			body.put("usuario_id",String.valueOf(usu.getId()));
 			body.put("usuario_tipo_usuario",usu.getTipo_usuario());
-			body.put("token", tokenServices.generateToken(usu.getUsername(), 1800));
+			body.put("token", tokenServices.generateToken(usu.getUsername(), 3600));
 			
 			return new ResponseEntity<Map<String,String>>(body,HttpStatus.OK); 
 		}
