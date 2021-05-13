@@ -11,4 +11,5 @@ public interface SolicitudDAO extends GenericDAO<Solicitud>{
 	List<SolicitudDTO> solicitudesDeOrganizador(Long id);
 	List<SolicitudDTO> solicitudesDeFoodTrucker(Long id);
 	List<Solicitud> recuperarPorFt(FoodTruck ft);
+	boolean verificarSolicitud(SolicitudDTO soli);
 }

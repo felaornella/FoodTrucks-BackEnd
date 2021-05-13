@@ -227,20 +227,18 @@ public class UsuarioRestController {
 	}	
 
 	@PostMapping ("/nuevaSolicitud")
-    public ResponseEntity<SolicitudDTO> newSolicitud(@RequestBody SolicitudDTO soli, @RequestHeader("token")  String token){
+    public ResponseEntity<SolicitudDTO> newSolicitud(@RequestBody SolicitudDTO soli){
         try {
-            String[] tokenpartes = new String[2];
-            tokenpartes[1] = token.substring(token.length()-6, token.length());
-            tokenpartes[0] = token.substring(0, token.length()-6);
-            
-            if (!tokenpartes[1].equals(String.valueOf(123456))) {
-				System.out.println(tokenpartes[1]);
-				return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
-			}
-        }catch(Exception e) {
-            return new ResponseEntity<SolicitudDTO>(HttpStatus.UNAUTHORIZED);
-        }
-        try {
+        	if(!soliImp.verificarSolicitud(soli)) {
+        		System.out.println("Solicitud repetida");
+    			return new ResponseEntity<SolicitudDTO>(HttpStatus.BAD_REQUEST);
+        	}
+        }catch (RuntimeException e) {
+			System.out.println("Problemas al Persistir Solicitud");
+			return new ResponseEntity<SolicitudDTO>(HttpStatus.NOT_FOUND);
+		}
+		try {
+        	
 			soliImp.persistir(soli);
 			System.out.println("Persistio Solicitud");
 			return new ResponseEntity<SolicitudDTO>(soli,HttpStatus.OK);

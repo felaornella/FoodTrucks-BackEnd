@@ -134,4 +134,10 @@ public class SolicitudServiceImp implements SolicitudService {
 		System.out.println("---------------------------------------------------");
 		
 	}
+
+	@Override
+	public boolean verificarSolicitud(SolicitudDTO soli) {
+		return this.SolicitudImp.verificarSolicitud(soli);
+		
+	}
 }

@@ -35,4 +35,6 @@ public interface SolicitudService {
 
 	public void cerrarFt(FoodTruck foodTruck);
 
+	public boolean verificarSolicitud(SolicitudDTO soli);
+
 }

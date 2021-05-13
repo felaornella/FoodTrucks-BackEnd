@@ -20,52 +20,77 @@ public class SolicitudDAOImpJPA extends GenericDAOImpJPA<Solicitud> implements S
 	public SolicitudDAOImpJPA() {
 		super(Solicitud.class);
 	}
-	
+
 	@Transactional
 	public List<SolicitudDTO> solicitudesDeOrganizador(Long id) {
 		try {
-//			Solicitud prueba = new Solicitud(); // borrar
-//			this.getEntityManager().persist(prueba); // borrar
 			System.out.print(id);
-//			System.out.println("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where creador_id=" + id);
-			Query consulta= this.getEntityManager().createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where creador_id=" + id);
+			Query consulta = this.getEntityManager().createQuery(
+					"SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where creador_id=" + id);
 			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
 			List<SolicitudDTO> resultadoFinal = new ArrayList<SolicitudDTO>();
-			for (Solicitud s: resultado) {
-				resultadoFinal.add(new SolicitudDTO(s));				
+			for (Solicitud s : resultado) {
+				resultadoFinal.add(new SolicitudDTO(s));
 			}
 			return resultadoFinal;
 		} catch (RuntimeException e) {
-			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con creador_id ingresado");
+			System.out.println(
+					"Problema al buscar " + this.getPersistentClass().getSimpleName() + " con creador_id ingresado");
 			return null;
 		}
 	}
-	
+
 	@Transactional
 	public List<SolicitudDTO> solicitudesDeFoodTrucker(Long id) {
 		try {
-			Query consulta= this.getEntityManager().createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where solicitado_id=" + id);
+			Query consulta = this.getEntityManager().createQuery(
+					"SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where solicitado_id=" + id);
 			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
 			List<SolicitudDTO> resultadoFinal = new ArrayList<SolicitudDTO>();
-			for (Solicitud s: resultado) {
-				resultadoFinal.add(new SolicitudDTO(s));				
+			for (Solicitud s : resultado) {
+				resultadoFinal.add(new SolicitudDTO(s));
 			}
 			return resultadoFinal;
 		} catch (RuntimeException e) {
-			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con solicitado_id ingresado");
+			System.out.println(
+					"Problema al buscar " + this.getPersistentClass().getSimpleName() + " con solicitado_id ingresado");
 			return null;
 		}
 	}
-	
+
 	@Transactional
 	public List<Solicitud> recuperarPorFt(FoodTruck ft) {
 		try {
-			Query consulta= this.getEntityManager().createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where foodtruck=" + ft.getId());
+			Query consulta = this.getEntityManager().createQuery(
+					"SELECT s FROM " + this.getPersistentClass().getSimpleName() + " s where foodtruck=" + ft.getId());
 			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
 			return resultado;
 		} catch (RuntimeException e) {
-			System.out.println("Problema al buscar "+ this.getPersistentClass().getSimpleName() +" con solicitado_id ingresado");
+			System.out.println(
+					"Problema al buscar " + this.getPersistentClass().getSimpleName() + " con solicitado_id ingresado");
 			return null;
 		}
 	}
+
+	@Transactional
+	public boolean verificarSolicitud(SolicitudDTO soli) {
+		try {
+			Query consulta = this.getEntityManager()
+					.createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName()
+							+ " s where estado <> 'Cancelada' and foodtruck=" + soli.getFoodtruck().getId()
+							+ " and evento=" + soli.getEvento().getId());
+			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
+			if (resultado.isEmpty()) {
+				//verificacion exitosa, se puede crear solicitud
+				return true;
+			} else {
+				return false;
+			}
+		} catch (RuntimeException e) {
+			System.out.println("Problema al buscar " + this.getPersistentClass().getSimpleName()
+					+ " con evento y foodtruck ingresado");
+			return false;
+		}
+	}
+
 }
