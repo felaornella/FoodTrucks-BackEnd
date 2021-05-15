@@ -77,7 +77,7 @@ public class SolicitudDAOImpJPA extends GenericDAOImpJPA<Solicitud> implements S
 		try {
 			Query consulta = this.getEntityManager()
 					.createQuery("SELECT s FROM " + this.getPersistentClass().getSimpleName()
-							+ " s where estado <> 'Cancelada' and foodtruck=" + soli.getFoodtruck().getId()
+							+ " s where (estado = 'Aceptada' or estado = 'Enviada') and foodtruck=" + soli.getFoodtruck().getId()
 							+ " and evento=" + soli.getEvento().getId());
 			List<Solicitud> resultado = (List<Solicitud>) consulta.getResultList();
 			if (resultado.isEmpty()) {
